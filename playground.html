@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmharicScript Playground</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FAF3E0;       /* warm cream */
+            --bg-dark: #1B1B18;          /* near-black */
+            --bg-panel: #F5ECD7;         /* slightly darker cream */
+            --color-green: #1B4332;      /* Ethiopian forest green */
+            --color-gold: #D4A017;       /* Ethiopian gold */
+            --color-accent: #C0392B;     /* alert red */
+            --color-text: #2C2416;       /* dark brown text */
+            --color-muted: #8B7355;      /* muted brown */
+            --font-amharic: 'Noto Serif Ethiopic', serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --font-ui: 'Inter', sans-serif;
+            --radius: 8px;
+            --shadow: 0 2px 12px rgba(27, 67, 50, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--color-text);
+            font-family: var(--font-ui);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--color-green);
+            color: var(--bg-primary);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--color-gold);
+        }
+
+        .logo {
+            font-family: var(--font-amharic);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--bg-panel);
+            margin-top: 0.2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        select {
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--color-muted);
+            font-family: var(--font-amharic);
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: var(--bg-panel);
+            padding: 1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar h3 {
+            font-family: var(--font-amharic);
+            margin-top: 0;
+            color: var(--color-green);
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 0.5rem;
+        }
+
+        .example-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--color-muted);
+            border-radius: var(--radius);
+            font-family: var(--font-amharic);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .example-btn:hover {
+            background: var(--color-gold);
+            color: var(--bg-dark);
+            border-color: var(--color-gold);
+        }
+
+        .editor-container {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .panels {
+            display: flex;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-panel);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .panel-header {
+            background: var(--color-green);
+            color: var(--bg-primary);
+            padding: 0.5rem 1rem;
+            font-family: var(--font-amharic);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        textarea, .output-code {
+            flex: 1;
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            background: var(--bg-primary);
+            color: var(--bg-dark);
+            font-family: var(--font-code);
+            font-size: 14px;
+            resize: none;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .output-code {
+            white-space: pre-wrap;
+            overflow-y: auto;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--color-green);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-family: var(--font-amharic);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--color-gold);
+            color: var(--bg-dark);
+        }
+
+        .btn-clear {
+            background: var(--color-muted);
+        }
+
+        .console {
+            height: 150px;
+            background: var(--bg-dark);
+            color: #00ff88;
+            font-family: var(--font-code);
+            padding: 1rem;
+            border-radius: var(--radius);
+            overflow-y: auto;
+            margin-top: 1rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .console-header {
+            color: var(--color-muted);
+            font-family: var(--font-amharic);
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            border-top: 1px solid var(--color-muted);
+        }
+
+        .disclaimer {
+            text-align: center;
+            color: var(--color-accent);
+            font-family: var(--font-amharic);
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+        
+        .error-shake {
+            animation: shake 0.3s;
+            border-color: var(--color-accent) !important;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <div class="logo">AmharicScript <span style="color:var(--color-gold);">አማርኛስክሪፕት</span></div>
+        <div class="subtitle">ፕሮግራሚንግ በአማርኛ (Programming in Amharic)</div>
+    </div>
+    <div class="header-controls">
+        <select>
+            <option value="amharic">አማርኛ (Amharic)</option>
+            <option value="oromo">Afaan Oromoo</option>
+        </select>
+        <a href="#" style="color:var(--color-gold); text-decoration:none;">GitHub</a>
+    </div>
+</header>
+
+<div class="disclaimer">⚠️ ይህ ቀላል ቅድመ እይታ ነው። ሙሉ ትርጉም ለማግኘት CLI ይጠቀሙ። - This is a simple preview. Use CLI for full translation.</div>
+
+<div class="main-content">
+    <div class="sidebar">
+        <h3>ምሳሌዎች (Examples)</h3>
+        <button class="example-btn" onclick="loadExample('hello')">ሰላም ዓለም<br><small>Hello World</small></button>
+        <button class="example-btn" onclick="loadExample('loop')">ቁጥር ሉፕ<br><small>Number Loop</small></button>
+        <button class="example-btn" onclick="loadExample('class')">ክፍል<br><small>Class</small></button>
+    </div>
+
+    <div class="editor-container">
+        <div class="panels">
+            <div class="panel">
+                <div class="panel-header">
+                    <span>የእርስዎ ኮድ (Your Code)</span>
+                </div>
+                <textarea id="sourceCode" spellcheck="false" placeholder="ኮድዎን እዚህ ይጻፉ... (Type your Amharic code here)"></textarea>
+            </div>
+
+            <div class="panel" id="outputPanel">
+                <div class="panel-header">
+                    <span>Python ውጤት (Python Output)</span>
+                    <button style="background:transparent;border:none;color:white;cursor:pointer;" onclick="copyOutput()">📋</button>
+                </div>
+                <div class="output-code" id="pythonOutput"></div>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <button class="btn" onclick="runCode()">▶ አሂድ (Run)</button>
+            <button class="btn btn-clear" onclick="clearCode()">🔄 አጽዳ (Clear)</button>
+        </div>
+
+        <div class="console">
+            <div class="console-header">ውጤት (Output Console)</div>
+            <div id="consoleOutput"></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    Adama Science and Technology University · CSEg 4306 · MIT License | v1.0
+</footer>
+
+<script>
+    const KEYWORDS = {
+        'ስራ': 'def', 'ክፍለ': 'class', 'ከሆነ': 'if', 'ካልሆነ': 'else',
+        'ካልሆነከሆነ': 'elif', 'እስከሆነ': 'while', 'ለእያንዳንዱ': 'for',
+        'ውስጥ': 'in', 'መልስ': 'return', 'አሳይ': 'print', 'ጠይቅ': 'input',
+        'እና': 'and', 'ወይም': 'or', 'አይደለም': 'not', 'እውነት': 'True',
+        'ሐሰት': 'False', 'ምንም': 'None', 'አምጣ': 'import', 'ከ': 'from',
+        'እንደ': 'as', 'ሞክር': 'try', 'ስህተት': 'except', 'መጨረሻ': 'finally',
+        'ጋር': 'with', 'አቋርጥ': 'break', 'ቀጥል': 'continue', 'ለጊዜው': 'pass',
+        'አጭር': 'lambda', 'ርዝመት': 'len', 'ክልል': 'range', 'ዝርዝር': 'list',
+        'መዝገብ': 'dict', 'ጽሑፍ': 'str', 'ቁጥር': 'int', 'ትክክለኛ': 'float',
+        'ክፈት': 'open', 'እኔ': 'self'
+    };
+
+    const EXAMPLES = {
+        'hello': `# hello.amh\nስራ ሰላም(ስም):\n    አሳይ(f'ሰላም፣ {ስም}!')\n\nሰላም('ቻሉ')`,
+        'loop': `# while ሉፕ\nቆጠራ = 1\nእስከሆነ ቆጠራ <= 5:\n    አሳይ(ቆጠራ)\n    ቆጠራ = ቆጠራ + 1`,
+        'class': `ክፍለ ተማሪ:\n    ስራ __init__(እኔ, ስም):\n        እኔ.ስም = ስም\n\n    ስራ መረጃ_አሳይ(እኔ):\n        አሳይ(f'ስም: {እኔ.ስም}')`
+    };
+
+    function transpile(source) {
+        let result = source;
+        for (const [amharic, python] of Object.entries(KEYWORDS)) {
+            // Regex to match whole Amharic words correctly
+            const regex = new RegExp(`(?<![\\w\\u1200-\\u137F])${amharic}(?![\\w\\u1200-\\u137F])`, 'g');
+            result = result.replace(regex, python);
+        }
+        return result;
+    }
+
+    function runCode() {
+        const source = document.getElementById('sourceCode').value;
+        const outPanel = document.getElementById('outputPanel');
+        const consOut = document.getElementById('consoleOutput');
+        
+        if (!source.trim()) {
+            outPanel.classList.add('error-shake');
+            setTimeout(() => outPanel.classList.remove('error-shake'), 300);
+            consOut.style.color = 'var(--color-accent)';
+            consOut.innerText = 'ስህተት: ባዶ ኮድ ማሄድ አይቻልም (Error: Cannot run empty code)';
+            return;
+        }
+
+        try {
+            const result = transpile(source);
+            document.getElementById('pythonOutput').textContent = result;
+            
+            outPanel.style.borderColor = 'var(--color-green)';
+            consOut.style.color = '#00ff88';
+            consOut.innerText = '✅ በተሳካ ሁኔታ ተተርጉሟል! (Transpiled successfully!)\nማስታወሻ: ይህ የቅድመ እይታ ትርጉም ነው፣ Python ኮዱን እዚህ ማሄድ አይቻልም። (Note: This is a preview translation, Python code cannot be executed here.)';
+        } catch (e) {
+            outPanel.classList.add('error-shake');
+            setTimeout(() => outPanel.classList.remove('error-shake'), 300);
+            consOut.style.color = 'var(--color-accent)';
+            consOut.innerText = 'ስህተት ተፈጥሯል (Error occurred): ' + e.message;
+        }
+    }
+
+    function loadExample(key) {
+        document.getElementById('sourceCode').value = EXAMPLES[key];
+        document.getElementById('pythonOutput').textContent = '';
+        document.getElementById('consoleOutput').innerText = '';
+        document.getElementById('outputPanel').style.borderColor = 'transparent';
+    }
+
+    function clearCode() {
+        document.getElementById('sourceCode').value = '';
+        document.getElementById('pythonOutput').textContent = '';
+        document.getElementById('consoleOutput').innerText = '';
+        document.getElementById('outputPanel').style.borderColor = 'transparent';
+    }
+
+    function copyOutput() {
+        const text = document.getElementById('pythonOutput').textContent;
+        if (text) {
+            navigator.clipboard.writeText(text);
+            const consOut = document.getElementById('consoleOutput');
+            consOut.innerText = '✅ ኮዱ ተቀድቷል (Code copied to clipboard)';
+        }
+    }
+</script>
+</body>
+</html>
