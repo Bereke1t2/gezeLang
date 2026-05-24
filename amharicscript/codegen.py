@@ -1,6 +1,6 @@
 # codegen.py — Emits valid Python source from AST via ast.unparse()
 import ast
-from adapter import AmharicScriptError
+from amharicscript.adapter import AmharicScriptError
 
 class AmharicCodeGenError(AmharicScriptError):
     pass
