@@ -10,16 +10,15 @@ Usage:
 """
 import argparse
 import sys
-import os
 from pathlib import Path
 
 # Allow running as script without installing as package
 sys.path.insert(0, str(Path(__file__).parent))
 
-from adapter import AdapterRegistry, AmharicScriptError
-from lexer import OromLexer
-from parser import OromParser
-from codegen import CodeGen
+from amharicscript.adapter import AdapterRegistry, AmharicScriptError
+from amharicscript.lexer import OromLexer
+from amharicscript.parser import OromParser
+from amharicscript.codegen import CodeGen
 
 ADAPTERS_DIR = Path(__file__).parent / 'adapters'
 
@@ -95,7 +94,7 @@ def main():
         return
 
     if args.stats:
-        from stats import print_stats
+        from amharicscript.stats import print_stats
         print_stats(source, source_path.name)
         return
 
