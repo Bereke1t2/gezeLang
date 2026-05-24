@@ -20,23 +20,22 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: |
-          pip install pytest pytest-cov
+        run: pip install pytest pytest-cov
 
       - name: Run tests
-        run: |
-          pytest tests/ -v --tb=short --cov=amharicscript --cov-report=term-missing || echo "Tests failed, ignoring to keep CI green temporarily."
+        run: pytest tests/ -v --tb=short
 
-      - name: Test CLI
-        run: |
-          python translator.py examples/hello.amh
-          python translator.py examples/control_flow.amh
-          python translator.py examples/classes.amh
-          python translator.py --list-langs
+      - name: Test CLI hello
+        run: python translator.py examples/hello.amh
 
-      - name: Test Oromo adapter
-        run: |
-          python translator.py --list-langs | grep oromo || true
+      - name: Test CLI control_flow
+        run: python translator.py examples/control_flow.amh
+
+      - name: Test CLI classes
+        run: python translator.py examples/classes.amh
+
+      - name: List available langs
+        run: python translator.py --list-langs
 
   lint:
     runs-on: ubuntu-latest
@@ -45,4 +44,4 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: pip install ruff
-      - run: ruff check amharicscript/ translator.py || true
+      - run: ruff check . --exclude venv --exclude .venv --exclude website --exclude vscode-extension || true
