@@ -1,13 +1,37 @@
 [build-system]
-requires = ["setuptools>=61.0.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "amharicscript"
 version = "1.0.0"
-description = "AmharicScript (አማርኛስክሪፕት) - Write Python in Amharic."
+description = "Write Python in Amharic — ፕሮግራሚንግ በአማርኛ"
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.9"
-authors = [
-  { name = "Adama Science and Technology University" }
+keywords = ["amharic", "ethiopian", "transpiler", "python", "programming-language"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Education",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Compilers",
+  "Natural Language :: Amharic",
 ]
+dependencies = []
+
+[project.urls]
+Homepage = "https://bereket.github.io/amharicscript"
+Repository = "https://github.com/bereket/amharicscript"
+Documentation = "https://bereket.github.io/amharicscript/docs/"
+"Bug Tracker" = "https://github.com/bereket/amharicscript/issues"
+
+[project.scripts]
+amharicscript = "translator:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["amharicscript"]
