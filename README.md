@@ -129,7 +129,7 @@ you can add support in 4–8 hours by following our
 [Adding a Language guide](https://Bereke1t2.github.io/gezeLang/docs/adding-language.html).
 
 ## Built At
-Adama Science and Technology University · SOEEC/CSE · CSEg 4306 · May 2026
+Adama Science and Technology University · SOEEC/CSE · May 2026
 
 ## License
 MIT — free to use, modify, and distribute.
