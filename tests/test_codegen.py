@@ -1,13 +1,13 @@
-import pytest, ast, sys
+import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from adapter import AdapterRegistry
-from lexer import OromLexer
-from parser import OromParser
-from codegen import CodeGen
+from amharicscript.adapter import AdapterRegistry
+from amharicscript.lexer import OromLexer
+from amharicscript.parser import OromParser
+from amharicscript.codegen import CodeGen
 
-AdapterRegistry.discover(Path(__file__).parent.parent / 'adapters')
+AdapterRegistry.discover(Path(__file__).parent.parent / 'amharicscript' / 'adapters')
 
 def transpile(src):
     lexer = OromLexer(src, 'amharic')

@@ -1,12 +1,11 @@
-import pytest
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from adapter import AdapterRegistry
-from lexer import OromLexer
+from amharicscript.adapter import AdapterRegistry
+from amharicscript.lexer import OromLexer
 
-AdapterRegistry.discover(Path(__file__).parent.parent / 'adapters')
+AdapterRegistry.discover(Path(__file__).parent.parent / 'amharicscript' / 'adapters')
 
 def test_keyword_translation():
     src = "ስራ ሰላም():\n    አሳይ('ሰላም')"
