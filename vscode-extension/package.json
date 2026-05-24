@@ -1,0 +1,96 @@
+{
+    "name": "amharicscript",
+    "displayName": "AmharicScript — አማርኛ ፕሮግራሚንግ",
+    "description": "Syntax highlighting, snippets, hover docs for AmharicScript (.amh)",
+    "version": "1.0.0",
+    "publisher": "amharicscript",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Snippets"
+    ],
+    "keywords": [
+        "amharic",
+        "ethiopian",
+        "transpiler",
+        "python",
+        "አማርኛ"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Bereke1t2/gezeLang"
+    },
+    "contributes": {
+        "languages": [
+            {
+                "id": "amharicscript",
+                "aliases": [
+                    "AmharicScript",
+                    "amh"
+                ],
+                "extensions": [
+                    ".amh"
+                ],
+                "configuration": "./language-configuration.json",
+                "icon": {
+                    "light": "./icons/amh-light.svg",
+                    "dark": "./icons/amh-dark.svg"
+                }
+            }
+        ],
+        "grammars": [
+            {
+                "language": "amharicscript",
+                "scopeName": "source.amharicscript",
+                "path": "./syntaxes/amharic.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "amharicscript",
+                "path": "./snippets/amharic.code-snippets"
+            }
+        ],
+        "commands": [
+            {
+                "command": "amharicscript.runFile",
+                "title": "AmharicScript: ▶ አሂድ (Run)",
+                "icon": "$(play)"
+            },
+            {
+                "command": "amharicscript.emitPython",
+                "title": "AmharicScript: ⬇ Python ፍጠር (Emit)"
+            }
+        ],
+        "menus": {
+            "editor/title": [
+                {
+                    "command": "amharicscript.runFile",
+                    "when": "resourceExtname == .amh",
+                    "group": "navigation"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "AmharicScript",
+            "properties": {
+                "amharicscript.pythonPath": {
+                    "type": "string",
+                    "default": "python",
+                    "description": "Python interpreter path"
+                },
+                "amharicscript.translatorPath": {
+                    "type": "string",
+                    "default": "translator.py",
+                    "description": "Path to translator.py"
+                }
+            }
+        }
+    },
+    "activationEvents": [
+        "onLanguage:amharicscript"
+    ],
+    "main": "./extension.js"
+}

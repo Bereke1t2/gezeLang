@@ -1,0 +1,164 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "AmharicScript",
+    "scopeName": "source.amharicscript",
+    "fileTypes": [
+        "amh"
+    ],
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#strings-f"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#keywords-def"
+        },
+        {
+            "include": "#keywords-control"
+        },
+        {
+            "include": "#keywords-logical"
+        },
+        {
+            "include": "#keywords-exception"
+        },
+        {
+            "include": "#keywords-import"
+        },
+        {
+            "include": "#builtins"
+        },
+        {
+            "include": "#self-kw"
+        },
+        {
+            "include": "#booleans"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#function-call"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "name": "comment.line.number-sign.amharicscript",
+            "match": "#.*$"
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.single.amharicscript",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.double.amharicscript",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape",
+                            "match": "\\\\."
+                        }
+                    ]
+                }
+            ]
+        },
+        "strings-f": {
+            "patterns": [
+                {
+                    "name": "string.quoted.single.amharicscript",
+                    "begin": "f'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape",
+                            "match": "\\\\."
+                        },
+                        {
+                            "name": "meta.embedded.line",
+                            "begin": "\\{",
+                            "end": "\\}"
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.double.amharicscript",
+                    "begin": "f\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape",
+                            "match": "\\\\."
+                        },
+                        {
+                            "name": "meta.embedded.line",
+                            "begin": "\\{",
+                            "end": "\\}"
+                        }
+                    ]
+                }
+            ]
+        },
+        "keywords-def": {
+            "name": "keyword.declaration.amharicscript",
+            "match": "\\b(ስራ|ክፍለ|መልስ|አጭር)\\b"
+        },
+        "keywords-control": {
+            "name": "keyword.control.amharicscript",
+            "match": "\\b(ከሆነ|ካልሆነ|ካልሆነከሆነ|እስከሆነ|ለእያንዳንዱ|ውስጥ|አቋርጥ|ቀጥል|ለጊዜው|ጋር)\\b"
+        },
+        "keywords-logical": {
+            "name": "keyword.operator.logical.amharicscript",
+            "match": "\\b(እና|ወይም|አይደለም)\\b"
+        },
+        "keywords-exception": {
+            "name": "keyword.control.exception.amharicscript",
+            "match": "\\b(ሞክር|ስህተት|መጨረሻ)\\b"
+        },
+        "keywords-import": {
+            "name": "keyword.control.import.amharicscript",
+            "match": "\\b(አምጣ|ከ|እንደ)\\b"
+        },
+        "builtins": {
+            "name": "support.function.builtin.amharicscript",
+            "match": "\\b(አሳይ|ጠይቅ|ርዝመት|ክልል|ዝርዝር|መዝገብ|ጽሑፍ|ቁጥር|ትክክለኛ|ክፈት)\\b"
+        },
+        "self-kw": {
+            "name": "variable.language.this.amharicscript",
+            "match": "\\bእኔ\\b"
+        },
+        "booleans": {
+            "name": "constant.language.amharicscript",
+            "match": "\\b(እውነት|ሐሰት|ምንም)\\b"
+        },
+        "numbers": {
+            "name": "constant.numeric.amharicscript",
+            "match": "\\b[0-9]+(\\.[0-9]+)?\\b"
+        },
+        "operators": {
+            "name": "keyword.operator.amharicscript",
+            "match": "(==|!=|<=|>=|<|>|\\+|-|\\*|/|%|=)"
+        },
+        "function-call": {
+            "name": "entity.name.function.amharicscript",
+            "match": "\\b([\\u1200-\\u137F\\w][\\u1200-\\u137F\\w]*)(?=\\s*\\()"
+        }
+    }
+}
