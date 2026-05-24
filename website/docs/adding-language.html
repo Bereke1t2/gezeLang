@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="am">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding a Language - AmharicScript</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;700&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/amharicscript/" class="logo">
+            <span class="logo-amh">አ</span> AmharicScript
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Docs</a>
+            <a href="../playground.html">Playground</a>
+            <a href="https://github.com/bereket/amharicscript">GitHub</a>
+        </div>
+    </nav>
+
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <ul>
+                <li><a href="index.html">Introduction</a></li>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="keywords.html">Keywords Reference</a></li>
+                <li><a href="adding-language.html" style="font-weight: bold;">Adding a Language</a></li>
+            </ul>
+        </aside>
+
+        <section class="docs-content">
+            <h1>Adding a Language</h1>
+            <p>AmharicScript's Plugin Architecture makes it easy to add support for any language natively in just a few
+                steps. Everything works purely via mapping configurations.</p>
+
+            <h2>Step 1: Create an Adapter Directory</h2>
+            <p>Go to the <code>adapters</code> directory and create a new folder for the language.</p>
+            <pre><code>mkdir -p adapters/oromo</code></pre>
+
+            <h2>Step 2: Create keywords.json</h2>
+            <p>Inside the new directory, create a <code>keywords.json</code> file spanning all keyword categories.</p>
+            <pre><code>{
+    "definitions": {
+        "def": "hojii",
+        "class": "kutaa",
+        "return": "deebisi",
+        "lambda": "gabaabaa"
+    },
+    ...
+}</code></pre>
+            <p>Ensure that all 37 keys exist. You can duplicate from <code>adapters/amharic/keywords.json</code>.</p>
+
+            <h2>Step 3: Test and Integrate</h2>
+            <p>Create a test case for your new language to ensure that your lexer picks up the right tokens. After
+                completing the words mapping, run:</p>
+            <pre><code>python translator.py --lang oromo test_file.ext</code></pre>
+
+            <h2>Step 4: PR to Main Repository</h2>
+            <p>We welcome contributions for Tigrinya, Guragigna, Somali and more! Make sure tests pass before opening a
+                Pull Request.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>Adama Science and Technology University · SOEEC/CSE · CSEg 4306</p>
+        <p>MIT License · <a href="https://github.com/bereket/amharicscript">GitHub</a></p>
+    </footer>
+</body>
+
+</html>

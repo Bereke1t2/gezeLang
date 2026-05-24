@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="am">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - AmharicScript</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;700&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/amharicscript/" class="logo">
+            <span class="logo-amh">አ</span> AmharicScript
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Docs</a>
+            <a href="../playground.html">Playground</a>
+            <a href="https://github.com/bereket/amharicscript">GitHub</a>
+        </div>
+    </nav>
+
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <ul>
+                <li><a href="index.html">Introduction</a></li>
+                <li><a href="getting-started.html" style="font-weight: bold;">Getting Started</a></li>
+                <li><a href="keywords.html">Keywords Reference</a></li>
+                <li><a href="adding-language.html">Adding a Language</a></li>
+            </ul>
+        </aside>
+
+        <section class="docs-content">
+            <h1>Getting Started</h1>
+
+            <h2>1. Installation</h2>
+            <p>You can install AmharicScript globally via pip:</p>
+            <pre><code>pip install amharicscript</code></pre>
+            <p>Or clone the source code to start modifying or adding languages:</p>
+            <pre><code>git clone https://github.com/bereket/amharicscript.git
+cd amharicscript</code></pre>
+
+            <h2>2. Your First Program</h2>
+            <p>Create a file named <code>hello.amh</code> and add the following:</p>
+            <pre><code>አሳይ('ሰላም ዓለም!')</code></pre>
+
+            <h2>3. Running Files (CLI)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>python translator.py program.amh</code></td>
+                        <td>Transpile + run the program</td>
+                    </tr>
+                    <tr>
+                        <td><code>python translator.py program.amh --emit</code></td>
+                        <td>Emit <code>program.py</code> file only</td>
+                    </tr>
+                    <tr>
+                        <td><code>python translator.py program.amh --lang oromo</code></td>
+                        <td>Use Oromo language adapter</td>
+                    </tr>
+                    <tr>
+                        <td><code>python translator.py --check program.amh</code></td>
+                        <td>Syntax check only</td>
+                    </tr>
+                    <tr>
+                        <td><code>python translator.py --list-langs</code></td>
+                        <td>List all available adapters</td>
+                    </tr>
+                    <tr>
+                        <td><code>python translator.py --stats program.amh</code></td>
+                        <td>View language usage statistics</td>
+                    </tr>
+                    <tr>
+                        <td><code>python translator.py --compare program.amh amharic oromo</code></td>
+                        <td>Compare multiple adapters</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>4. VS Code Extension Setup</h2>
+            <p>The recommended way to write AmharicScript is with our official VS Code extension which brings:</p>
+            <ul>
+                <li>Syntax highlighting</li>
+                <li>Hover popup translation / documentation</li>
+                <li>Snippets</li>
+            </ul>
+            <p>Search for <strong>AmharicScript</strong> in the sidebar, or compile it manually from the
+                <code>vscode-extension</code> folder using <code>vsce package</code>.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>Adama Science and Technology University · SOEEC/CSE · CSEg 4306</p>
+        <p>MIT License · <a href="https://github.com/bereket/amharicscript">GitHub</a></p>
+    </footer>
+</body>
+
+</html>

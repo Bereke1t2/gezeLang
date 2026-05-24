@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="am">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmharicScript - Playground</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;700&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/amharicscript/" class="logo">
+            <span class="logo-amh">አ</span> AmharicScript
+        </a>
+        <div class="nav-links">
+            <a href="docs/">Docs</a>
+            <a href="playground.html">Playground</a>
+            <a href="https://github.com/bereket/amharicscript">GitHub</a>
+            <a href="#install" class="btn btn-pip">pip install amharicscript</a>
+        </div>
+    </nav>
+
+    <div class="toolbar">
+        <button id="runBtn" class="btn">▶ አሂድ (Run)</button>
+        <span style="font-size: 0.8em; opacity: 0.8">💡 Ctrl+Enter</span>
+        <button id="clearBtn" class="btn" style="background: var(--bg-panel); color: var(--green);">🔄 አጽዳ</button>
+        <p style="margin-left: auto; font-size: 0.8rem; color: var(--gold);">⚠️ ይህ ቅድመ እይታ ነው። ሙሉ ትርጉም ለማግኘት CLI ይጠቀሙ።
+        </p>
+    </div>
+
+    <div class="playground-container">
+        <div class="pane">
+            <div class="pane-header">
+                <span>የእርስዎ ኮድ (Your Code)</span>
+                <select id="langSelect"
+                    style="padding: 0.2rem; border-radius: var(--radius); border: 1px solid var(--green);">
+                    <option value="amharic">Amharic (አማርኛ)</option>
+                </select>
+            </div>
+            <textarea id="codeInput" class="editor-area" placeholder="ኮድዎን እዚህ ይጻፉ..."></textarea>
+        </div>
+
+        <div class="pane">
+            <div class="pane-header">
+                <span>Python ውጤት (Python Output)</span>
+                <button id="copyBtn"
+                    style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">📋</button>
+            </div>
+            <pre id="codeOutput" class="editor-area" readonly style="background: var(--code-bg); color: #fff;"></pre>
+        </div>
+    </div>
+
+    <div class="output-console" id="consoleOutput">
+        <div
+            style="color: var(--gold); margin-bottom: 0.5rem; border-bottom: 1px solid var(--gold); padding-bottom: 0.2rem;">
+            ውጤት (Console Output)</div>
+        <div id="consoleLog"></div>
+    </div>
+
+    <footer>
+        <p>Adama Science and Technology University · SOEEC/CSE · CSEg 4306</p>
+        <p>MIT License · <a href="https://github.com/bereket/amharicscript">GitHub</a></p>
+        <p class="amharic-text">ለኢትዮጵያ ተማሪዎች ሁሉ — For all Ethiopian students</p>
+    </footer>
+
+    <script src="assets/keywords.js"></script>
+    <script>
+        const codeInput = document.getElementById('codeInput');
+        const codeOutput = document.getElementById('codeOutput');
+        const consoleLog = document.getElementById('consoleLog');
+        const runBtn = document.getElementById('runBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        function runTranslation() {
+            const source = codeInput.value;
+            const pythonSource = transpileToPreview(source);
+            codeOutput.innerText = pythonSource;
+            codeOutput.style.border = '2px solid var(--green)';
+            consoleLog.innerHTML = `<span style="color: #a8bba8;">>>> Translated to Python AST format...</span>`;
+        }
+
+        runBtn.addEventListener('click', runTranslation);
+
+        codeInput.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                runTranslation();
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            codeInput.value = '';
+            codeOutput.innerText = '';
+            consoleLog.innerHTML = '';
+            codeOutput.style.border = 'none';
+        });
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(codeOutput.innerText);
+            alert("ኮንሶል ተቀድቷል (Copied)!");
+        });
+    </script>
+</body>
+
+</html>

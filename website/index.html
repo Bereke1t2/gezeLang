@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="am">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmharicScript</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;700&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/amharicscript/" class="logo">
+            <span class="logo-amh">አ</span> AmharicScript
+        </a>
+        <div class="nav-links">
+            <a href="docs/">Docs</a>
+            <a href="playground.html">Playground</a>
+            <a href="https://github.com/bereket/amharicscript">GitHub</a>
+            <a href="#install" class="btn btn-pip">pip install amharicscript</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Write Python in Amharic</h1>
+        <p class="subhead amharic-text">ፕሮግራሚንግ በእናታችን ቋንቋ — Programming in our mother tongue</p>
+        <div class="cta-group">
+            <a href="playground.html" class="btn">▶ Try Playground</a>
+            <a href="#install" class="btn btn-pip">pip install amharicscript</a>
+        </div>
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="term-dot"></span>
+                <span class="term-dot"></span>
+                <span class="term-dot"></span>
+            </div>
+            <div class="terminal-body">
+                <!-- Javascript will animate typing here -->
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <h3>🌍 37 Amharic Keywords</h3>
+            <p>Develop real Python programs using full Amharic syntax. Every standard control flow and built-in type is
+                supported natively without performance loss.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🔌 Plugin Architecture</h3>
+            <p>Our compiler architecture permits adding any Ethiopian language in one simple JSON file. Contribute to
+                Oromo, Tigrinya, and more.</p>
+        </div>
+        <div class="feature-card">
+            <h3>⚡ Zero Overhead</h3>
+            <p>Because AmharicScript operates as a source-to-source transpiler parsing into AST, the generated Python
+                runs at native CPython speed.</p>
+        </div>
+    </section>
+
+    <section class="comparison">
+        <div class="code-block">
+            <div class="code-header">Amharic Source (.amh)</div>
+            <div class="code-content">
+                <pre><code>ክፍለ ተማሪ:
+    ስራ __init__(እኔ, ስም):
+        እኔ.ስም = ስም
+
+    ስራ አሳይ_ስም(እኔ):
+        አሳይ(f'የተማሪው ስም {እኔ.ስም} ነው')</code></pre>
+            </div>
+        </div>
+        <div class="code-block">
+            <div class="code-header">Generated Python (.py)</div>
+            <div class="code-content">
+                <pre><code>class ተማሪ:
+    def __init__(self, ስም):
+        self.ስም = ስም
+
+    def አሳይ_ስም(self):
+        print(f'የተማሪው ስም {self.ስም} ነው')</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="languages" class="section-title">
+        <h2>Available Languages</h2>
+        <div class="features" style="padding-top: 0;">
+            <div class="feature-card" style="border-color: var(--green-light);">
+                <h3>🇪🇹 Amharic (አማርኛ)</h3>
+                <p>Status: Active</p>
+                <p>Full support for all 37 mapped keywords and contextual error logs.</p>
+            </div>
+            <div class="feature-card" style="opacity: 0.7;">
+                <h3>🇪🇹 Oromo (Afaan Oromoo)</h3>
+                <p>Status: Coming Soon</p>
+                <p>Early stage testing. JSON mapping available.</p>
+            </div>
+            <div class="feature-card" style="background: transparent; border: 1px dashed var(--gold);">
+                <h3>+ Add Yours</h3>
+                <p>Want to support Tigrinya, Somali, or Guragigna?</p>
+                <a href="docs/adding-language.html" style="color: var(--gold); text-decoration: underline;">Read the
+                    guide</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="install" class="section-title">
+        <h2>Installation</h2>
+        <div class="install-block">
+            <h4>Pip Install Package</h4>
+            <code>$ pip install amharicscript</code>
+        </div>
+        <div class="install-block">
+            <h4>Install VS Code Extension</h4>
+            <code>Open VS Code &gt; Extension Sidebar &gt; Search 'AmharicScript'</code>
+        </div>
+        <div class="install-block">
+            <h4>Clone for Contribution</h4>
+            <code>$ git clone https://github.com/bereket/amharicscript.git</code>
+        </div>
+    </section>
+
+    <footer>
+        <p>Adama Science and Technology University · SOEEC/CSE · CSEg 4306</p>
+        <p>MIT License · <a href="https://github.com/bereket/amharicscript">GitHub</a></p>
+        <p class="amharic-text">ለኢትዮጵያ ተማሪዎች ሁሉ — For all Ethiopian students</p>
+    </footer>
+
+    <script src="assets/app.js"></script>
+</body>
+
+</html>

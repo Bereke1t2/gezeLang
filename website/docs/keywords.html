@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="am">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keywords - AmharicScript</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;700&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/amharicscript/" class="logo">
+            <span class="logo-amh">አ</span> AmharicScript
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Docs</a>
+            <a href="../playground.html">Playground</a>
+            <a href="https://github.com/bereket/amharicscript">GitHub</a>
+        </div>
+    </nav>
+
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <ul>
+                <li><a href="index.html">Introduction</a></li>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="keywords.html" style="font-weight: bold;">Keywords Reference</a></li>
+                <li><a href="adding-language.html">Adding a Language</a></li>
+            </ul>
+        </aside>
+
+        <section class="docs-content">
+            <h1>Keywords Reference</h1>
+            <p>Below are all the 37 available mapped keywords in the Amharic adapter.</p>
+
+            <input type="text" id="searchInput" placeholder="Search keywords in English or Amharic...">
+
+            <table id="keywordsTable">
+                <thead>
+                    <tr>
+                        <th>Amharic</th>
+                        <th>Pronunciation</th>
+                        <th>Python</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ስራ</td>
+                        <td>sira</td>
+                        <td>def</td>
+                        <td>Definitions</td>
+                    </tr>
+                    <tr>
+                        <td>ክፍለ</td>
+                        <td>kifle</td>
+                        <td>class</td>
+                        <td>Definitions</td>
+                    </tr>
+                    <tr>
+                        <td>መልስ</td>
+                        <td>meles</td>
+                        <td>return</td>
+                        <td>Definitions</td>
+                    </tr>
+                    <tr>
+                        <td>አጭር</td>
+                        <td>achir</td>
+                        <td>lambda</td>
+                        <td>Definitions</td>
+                    </tr>
+                    <tr>
+                        <td>ከሆነ</td>
+                        <td>kehone</td>
+                        <td>if</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>ካልሆነ</td>
+                        <td>kalhone</td>
+                        <td>else</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>ካልሆነከሆነ</td>
+                        <td>kalhonekehone</td>
+                        <td>elif</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>እስከሆነ</td>
+                        <td>eskehone</td>
+                        <td>while</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>ለእያንዳንዱ</td>
+                        <td>leeyandandu</td>
+                        <td>for</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>ውስጥ</td>
+                        <td>wist</td>
+                        <td>in</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>አቋርጥ</td>
+                        <td>akwarit</td>
+                        <td>break</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>ቀጥል</td>
+                        <td>ketil</td>
+                        <td>continue</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>ለጊዜው</td>
+                        <td>legizew</td>
+                        <td>pass</td>
+                        <td>Control</td>
+                    </tr>
+                    <tr>
+                        <td>እና</td>
+                        <td>ena</td>
+                        <td>and</td>
+                        <td>Logic</td>
+                    </tr>
+                    <tr>
+                        <td>ወይም</td>
+                        <td>weyim</td>
+                        <td>or</td>
+                        <td>Logic</td>
+                    </tr>
+                    <tr>
+                        <td>አይደለም</td>
+                        <td>ayidelem</td>
+                        <td>not</td>
+                        <td>Logic</td>
+                    </tr>
+                    <tr>
+                        <td>ሞክር</td>
+                        <td>mokir</td>
+                        <td>try</td>
+                        <td>Exceptions</td>
+                    </tr>
+                    <tr>
+                        <td>ስህተት</td>
+                        <td>sihitet</td>
+                        <td>except</td>
+                        <td>Exceptions</td>
+                    </tr>
+                    <tr>
+                        <td>መጨረሻ</td>
+                        <td>mecheresha</td>
+                        <td>finally</td>
+                        <td>Exceptions</td>
+                    </tr>
+                    <tr>
+                        <td>አምጣ</td>
+                        <td>amta</td>
+                        <td>import</td>
+                        <td>Imports</td>
+                    </tr>
+                    <tr>
+                        <td>ከ</td>
+                        <td>ke</td>
+                        <td>from</td>
+                        <td>Imports</td>
+                    </tr>
+                    <tr>
+                        <td>እንደ</td>
+                        <td>ende</td>
+                        <td>as</td>
+                        <td>Imports</td>
+                    </tr>
+                    <tr>
+                        <td>ጋር</td>
+                        <td>gar</td>
+                        <td>with</td>
+                        <td>Context</td>
+                    </tr>
+                    <tr>
+                        <td>አሳይ</td>
+                        <td>asayi</td>
+                        <td>print</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>ጠይቅ</td>
+                        <td>teyik</td>
+                        <td>input</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>ርዝመት</td>
+                        <td>rizmet</td>
+                        <td>len</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>ክልል</td>
+                        <td>kilil</td>
+                        <td>range</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>ዝርዝር</td>
+                        <td>zirzir</td>
+                        <td>list</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>መዝገብ</td>
+                        <td>mezgeb</td>
+                        <td>dict</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>ጽሑፍ</td>
+                        <td>tsihuf</td>
+                        <td>str</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>ቁጥር</td>
+                        <td>kutir</td>
+                        <td>int</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>ትክክለኛ</td>
+                        <td>tikiklegna</td>
+                        <td>float</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>ክፈት</td>
+                        <td>kifet</td>
+                        <td>open</td>
+                        <td>Builtins</td>
+                    </tr>
+                    <tr>
+                        <td>እውነት</td>
+                        <td>ewnet</td>
+                        <td>True</td>
+                        <td>Literals</td>
+                    </tr>
+                    <tr>
+                        <td>ሐሰት</td>
+                        <td>haset</td>
+                        <td>False</td>
+                        <td>Literals</td>
+                    </tr>
+                    <tr>
+                        <td>ምንም</td>
+                        <td>minim</td>
+                        <td>None</td>
+                        <td>Literals</td>
+                    </tr>
+                    <tr>
+                        <td>እኔ</td>
+                        <td>ene</td>
+                        <td>self</td>
+                        <td>OOP</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        <p>Adama Science and Technology University · SOEEC/CSE · CSEg 4306</p>
+        <p>MIT License · <a href="https://github.com/bereket/amharicscript">GitHub</a></p>
+    </footer>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('#keywordsTable tbody tr');
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
