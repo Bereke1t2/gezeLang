@@ -1,12 +1,12 @@
-# parser.py — Builds Python AST from translated (Python-keyword) source
 import ast
 from adapter import AmharicScriptError
+from explainer import explain_error
 
 class AmharicParseError(AmharicScriptError):
     pass
 
 class OromParser:
-    def parse(self, python_source: str) -> ast.AST:
+    def parse(self, python_source: str, original_source: str = "") -> ast.AST:
         """
         Parse the translated Python source into an AST.
         Maps SyntaxError back to Amharic error message.
@@ -15,9 +15,7 @@ class OromParser:
             tree = ast.parse(python_source)
             return tree
         except SyntaxError as e:
-            raise AmharicParseError(
-                f"ስህተት[E001] አገባብ ስህተት — ኮድዎ ትክክለኛ አይደለም\n"
-                f"  መስመር {e.lineno}, ቦታ {e.offset}: {e.msg}\n"
-                f"  힌트: ሁሉም ቁልፍ ቃላት አማርኛ መሆን አለባቸው፣ "
-                f"መዋቅሩ ደግሞ ትክክለኛ ሊሆን ይገባዋል።"
-            )
+            source_lines = original_source.split('\n') if original_source else []
+            explanation = explain_error(e.msg, e.lineno, e.offset, source_lines)
+            raise AmharicParseError(explanation)
+
