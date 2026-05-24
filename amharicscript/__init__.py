@@ -1,8 +1,8 @@
 # __init__.py — AmharicScript library API
-from adapter import AdapterRegistry
-from lexer import OromLexer
-from parser import OromParser
-from codegen import CodeGen
+from amharicscript.adapter import AdapterRegistry
+from amharicscript.lexer import OromLexer
+from amharicscript.parser import OromParser
+from .codegen import CodeGen
 from pathlib import Path
 
 _ADAPTERS_DIR = Path(__file__).parent / 'adapters'
