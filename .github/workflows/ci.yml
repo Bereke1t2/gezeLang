@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     strategy:
       matrix:
         python-version: ['3.10', '3.11', '3.12']
@@ -20,25 +22,29 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install pytest pytest-cov
+        run: |
+          pip install pytest pytest-cov
+          pip install -e .
 
       - name: Run tests
         run: pytest tests/ -v --tb=short
 
       - name: Test CLI hello
-        run: python translator.py examples/hello.amh
+        run: amharicscript examples/hello.amh
 
       - name: Test CLI control_flow
-        run: python translator.py examples/control_flow.amh
+        run: amharicscript examples/control_flow.amh
 
       - name: Test CLI classes
-        run: python translator.py examples/classes.amh
+        run: amharicscript examples/classes.amh
 
       - name: List available langs
-        run: python translator.py --list-langs
+        run: amharicscript --list-langs
 
   lint:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
