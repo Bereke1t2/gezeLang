@@ -1,5 +1,6 @@
 # stats.py — Language usage statistics for .amh files
-import tokenize, io
+import tokenize
+import io
 from collections import Counter
 
 CATEGORIES = {
@@ -48,11 +49,11 @@ def print_stats(source: str, filename: str):
     print(f"  መስመሮች:          {s['total_lines']}")
     print(f"  ቁልፍ ቃሎች:        {s['total_keywords']} ({s['unique_keywords']} ዓይነት)")
     print(f"  አማርኛ ስሞች:       {s['amharic_identifier_ratio']}%")
-    print(f"\n  📂 ምድብ ዝርዝር:")
+    print("\n  📂 ምድብ ዝርዝር:")
     for cat, count in s['category_breakdown'].items():
         bar = '█' * min(count, 20)
         print(f"    {cat:<28} {bar} {count}")
-    print(f"\n  🔝 ብዙ ጊዜ ያገለግሉ ቃሎች:")
+    print("\n  🔝 ብዙ ጊዜ ያገለግሉ ቃሎች:")
     for kw, count in s['keyword_uses'].most_common(5):
         print(f"    {kw:<15} × {count}")
     print(f"{'━'*50}\n")
