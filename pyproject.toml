@@ -31,10 +31,10 @@ Documentation = "https://Bereke1t2.github.io/gezeLang/docs/"
 "Bug Tracker" = "https://github.com/Bereke1t2/gezeLang/issues"
 
 [project.scripts]
-amharicscript = "translator:main"
+amharicscript = "amharicscript.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["."]
+packages = ["amharicscript"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
