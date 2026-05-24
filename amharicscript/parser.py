@@ -1,6 +1,6 @@
 import ast
-from adapter import AmharicScriptError
-from explainer import explain_error
+from amharicscript.adapter import AmharicScriptError
+from amharicscript.explainer import explain_error
 
 class AmharicParseError(AmharicScriptError):
     pass
