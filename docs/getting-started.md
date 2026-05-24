@@ -4,7 +4,7 @@
 ```bash
 pip install amharicscript
 # or
-git clone https://github.com/bereket/amharicscript && cd amharicscript
+git clone https://github.com/Bereke1t2/gezeLang && cd amharicscript
 ```
 
 ## Your First Program

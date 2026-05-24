@@ -11,7 +11,7 @@ Thank you for your interest! Contributions welcome from everyone.
 
 ## Development Setup
 ```bash
-git clone https://github.com/bereket/amharicscript
+git clone https://github.com/Bereke1t2/gezeLang
 cd amharicscript
 pip install pytest ruff
 pytest tests/ -v
