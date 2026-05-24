@@ -34,4 +34,9 @@ Documentation = "https://Bereke1t2.github.io/gezeLang/docs/"
 amharicscript = "translator:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["amharicscript"]
+packages = ["."]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
