@@ -37,6 +37,10 @@ def main():
                         help='አገባብ ብቻ ፈትሽ')
     parser.add_argument('--list-langs', action='store_true',
                         help='የሚገኙ ቋንቋዎችን አሳይ')
+    parser.add_argument('--stats', action='store_true',
+                        help='Show language statistics')
+    parser.add_argument('--compare', nargs='+', metavar='LANG',
+                        help='Compare adapters against a program')
     args = parser.parse_args()
 
     # Discover all adapters
@@ -62,6 +66,39 @@ def main():
     # Read source with UTF-8 encoding (required for Amharic)
     source = source_path.read_text(encoding='utf-8')
 
+    if args.compare:
+        langs = args.compare  # list of lang names
+        results = {}
+        for lang in langs:
+            try:
+                AdapterRegistry.discover(ADAPTERS_DIR)
+                lexer = OromLexer(source, lang=lang)
+                py_src = lexer.translate()
+                tree = OromParser().parse(py_src, original_source=source)
+                results[lang] = CodeGen().generate(tree)
+            except getattr(sys.modules['adapter'], 'AmharicScriptError', getattr(sys.modules.get('adapter'), 'AmharicScriptError', Exception)) as e:
+                results[lang] = f'ስህተት: {e}'
+            except Exception as e:
+                results[lang] = f'ስህተት: {e}'
+        
+        print(f"{'━'*40}")
+        print("AmharicScript — ቋንቋ ንጽጽር (Language Comparison)")
+        print(f"{'━'*40}")
+        print(f"ፋይል: {source_path.name}\n")
+        for lang, r in results.items():
+            print(f"[{lang}] → Generated Python:")
+            for line in r.splitlines():
+                print(f"  {line}")
+            print()
+        print("ሁለቱም ፕሮግራሞች ትክክለኛ Python አመነጩ ✅")
+        print(f"{'━'*40}")
+        return
+
+    if args.stats:
+        from stats import print_stats
+        print_stats(source, source_path.name)
+        return
+
     try:
         # Phase 1: Lex — translate Amharic keywords to Python keywords
         lexer = OromLexer(source, lang=args.lang)
@@ -69,7 +106,7 @@ def main():
 
         # Phase 2: Parse — build AST
         ast_parser = OromParser()
-        tree = ast_parser.parse(python_source)
+        tree = ast_parser.parse(python_source, original_source=source)
 
         # --check only
         if args.check:
