@@ -1,29 +1,29 @@
 <div align="center">
 
-# አማርኛስክሪፕት · AmharicScript
+# ጌዜ ቋንቋ · GezeLang
 
 **Write Python in Amharic — Execute Anywhere**
 
 *ፕሮግራሚንግ በእናታችን ቋንቋ — Programming in our mother tongue*
 
 [![CI](https://github.com/Bereke1t2/gezeLang/actions/workflows/ci.yml/badge.svg)](https://github.com/Bereke1t2/gezeLang/actions/workflows/ci.yml)
-[![PyPI](https://img.shields.io/pypi/v/amharicscript)](https://pypi.org/project/amharicscript/)
-[![Python](https://img.shields.io/pypi/pyversions/amharicscript)](https://pypi.org/project/amharicscript/)
+[![PyPI](https://img.shields.io/pypi/v/gezeLang)](https://pypi.org/project/gezeLang/)
+[![Python](https://img.shields.io/pypi/pyversions/gezeLang)](https://pypi.org/project/gezeLang/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![VS Code](https://img.shields.io/visual-studio-marketplace/v/amharicscript.amharicscript)](https://marketplace.visualstudio.com/items?itemName=amharicscript.amharicscript)
+[![VS Code](https://img.shields.io/visual-studio-marketplace/v/gezeLang.gezeLang)](https://marketplace.visualstudio.com/items?itemName=gezeLang.gezeLang)
 
 [🌐 Website](https://Bereke1t2.github.io/gezeLang) ·
 [▶ Playground](https://Bereke1t2.github.io/gezeLang/playground.html) ·
 [📖 Docs](https://Bereke1t2.github.io/gezeLang/docs/) ·
-[🔌 VS Code Extension](https://marketplace.visualstudio.com/items?itemName=amharicscript.amharicscript)
+[🔌 VS Code Extension](https://marketplace.visualstudio.com/items?itemName=gezeLang.gezeLang)
 
 </div>
 
 ---
 
-## What is AmharicScript?
+## What is GezeLang?
 
-AmharicScript is an open-source **source-to-source transpiler** that lets developers
+GezeLang is an open-source **source-to-source transpiler** that lets developers
 write Python programs using **Amharic (አማርኛ)** keywords and identifiers.
 
 Source files (`.amh`) are parsed into a language-agnostic AST, then compiled to
@@ -47,20 +47,20 @@ def ሰላም(ስም):
 ## Installation
 
 ```bash
-pip install amharicscript
+pip install gezeLang
 ```
 
 Or clone:
 ```bash
 git clone https://github.com/Bereke1t2/gezeLang.git
-cd amharicscript
+cd gezeLang
 python translator.py examples/hello.amh
 ```
 
 ## VS Code Extension
-Install from the marketplace: search **"AmharicScript"** or:
+Install from the marketplace: search **"GezeLang"** or:
 ```bash
-code --install-extension amharicscript.amharicscript
+code --install-extension gezeLang.gezeLang
 ```
 Features: syntax highlighting · code snippets · hover docs · ▶ run button
 
@@ -85,7 +85,7 @@ python translator.py --list-langs          # show available language adapters
 [→ Full 37-keyword reference](https://Bereke1t2.github.io/gezeLang/docs/keywords.html)
 
 ## Adding a New Language
-AmharicScript's plugin architecture makes adding any Ethiopian language trivial:
+GezeLang's plugin architecture makes adding any Ethiopian language trivial:
 
 ```bash
 # 1. Create adapter folder
@@ -109,8 +109,8 @@ python translator.py program.tgr --lang tigrinya
 
 ## Project Structure
 ```
-amharicscript/
-├── amharicscript/    # pip-installable package
+gezeLang/
+├── gezeLang/         # pip-installable package
 ├── translator.py     # CLI entry point
 ├── vscode-extension/ # VS Code extension
 ├── website/          # Static documentation site
