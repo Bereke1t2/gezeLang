@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-    "name": "AmharicScript",
-    "scopeName": "source.amharicscript",
+    "name": "GezeLang",
+    "scopeName": "source.gezeLang",
     "fileTypes": [
         "amh"
     ],
@@ -51,13 +51,13 @@
     ],
     "repository": {
         "comments": {
-            "name": "comment.line.number-sign.amharicscript",
+            "name": "comment.line.number-sign.gezeLang",
             "match": "#.*$"
         },
         "strings": {
             "patterns": [
                 {
-                    "name": "string.quoted.single.amharicscript",
+                    "name": "string.quoted.single.gezeLang",
                     "begin": "'",
                     "end": "'",
                     "patterns": [
@@ -68,7 +68,7 @@
                     ]
                 },
                 {
-                    "name": "string.quoted.double.amharicscript",
+                    "name": "string.quoted.double.gezeLang",
                     "begin": "\"",
                     "end": "\"",
                     "patterns": [
@@ -83,7 +83,7 @@
         "strings-f": {
             "patterns": [
                 {
-                    "name": "string.quoted.single.amharicscript",
+                    "name": "string.quoted.single.gezeLang",
                     "begin": "f'",
                     "end": "'",
                     "patterns": [
@@ -99,7 +99,7 @@
                     ]
                 },
                 {
-                    "name": "string.quoted.double.amharicscript",
+                    "name": "string.quoted.double.gezeLang",
                     "begin": "f\"",
                     "end": "\"",
                     "patterns": [
@@ -117,47 +117,47 @@
             ]
         },
         "keywords-def": {
-            "name": "keyword.declaration.amharicscript",
+            "name": "keyword.declaration.gezeLang",
             "match": "\\b(ስራ|ክፍለ|መልስ|አጭር)\\b"
         },
         "keywords-control": {
-            "name": "keyword.control.amharicscript",
+            "name": "keyword.control.gezeLang",
             "match": "\\b(ከሆነ|ካልሆነ|ካልሆነከሆነ|እስከሆነ|ለእያንዳንዱ|ውስጥ|አቋርጥ|ቀጥል|ለጊዜው|ጋር)\\b"
         },
         "keywords-logical": {
-            "name": "keyword.operator.logical.amharicscript",
+            "name": "keyword.operator.logical.gezeLang",
             "match": "\\b(እና|ወይም|አይደለም)\\b"
         },
         "keywords-exception": {
-            "name": "keyword.control.exception.amharicscript",
+            "name": "keyword.control.exception.gezeLang",
             "match": "\\b(ሞክር|ስህተት|መጨረሻ)\\b"
         },
         "keywords-import": {
-            "name": "keyword.control.import.amharicscript",
+            "name": "keyword.control.import.gezeLang",
             "match": "\\b(አምጣ|ከ|እንደ)\\b"
         },
         "builtins": {
-            "name": "support.function.builtin.amharicscript",
+            "name": "support.function.builtin.gezeLang",
             "match": "\\b(አሳይ|ጠይቅ|ርዝመት|ክልል|ዝርዝር|መዝገብ|ጽሑፍ|ቁጥር|ትክክለኛ|ክፈት)\\b"
         },
         "self-kw": {
-            "name": "variable.language.this.amharicscript",
+            "name": "variable.language.this.gezeLang",
             "match": "\\bእኔ\\b"
         },
         "booleans": {
-            "name": "constant.language.amharicscript",
+            "name": "constant.language.gezeLang",
             "match": "\\b(እውነት|ሐሰት|ምንም)\\b"
         },
         "numbers": {
-            "name": "constant.numeric.amharicscript",
+            "name": "constant.numeric.gezeLang",
             "match": "\\b[0-9]+(\\.[0-9]+)?\\b"
         },
         "operators": {
-            "name": "keyword.operator.amharicscript",
+            "name": "keyword.operator.gezeLang",
             "match": "(==|!=|<=|>=|<|>|\\+|-|\\*|/|%|=)"
         },
         "function-call": {
-            "name": "entity.name.function.amharicscript",
+            "name": "entity.name.function.gezeLang",
             "match": "\\b([\\u1200-\\u137F\\w][\\u1200-\\u137F\\w]*)(?=\\s*\\()"
         }
     }
