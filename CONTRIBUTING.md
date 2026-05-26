@@ -1,4 +1,4 @@
-# Contributing to AmharicScript
+# Contributing to GezeLang
 
 Thank you for your interest! Contributions welcome from everyone.
 
@@ -12,7 +12,7 @@ Thank you for your interest! Contributions welcome from everyone.
 ## Development Setup
 ```bash
 git clone https://github.com/Bereke1t2/gezeLang
-cd amharicscript
+cd gezeLang
 pip install pytest ruff
 pytest tests/ -v
 ```

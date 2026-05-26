@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to AmharicScript are documented here.
+All notable changes to GezeLang are documented here.
 Format: [Semantic Versioning](https://semver.org/)
 
 ## [Unreleased]
