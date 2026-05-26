@@ -42,7 +42,7 @@ const KEYWORDS = {
 
 function activate(context) {
     // Hover Provider
-    let hoverDisposable = vscode.languages.registerHoverProvider('amharicscript', {
+    let hoverDisposable = vscode.languages.registerHoverProvider('gezeLang', {
         provideHover(document, position, token) {
             const wordRange = document.getWordRangeAtPosition(position, /[\u1200-\u137F][\u1200-\u137Fa-zA-Z0-9_]*/);
             if (!wordRange) return null;
@@ -51,7 +51,7 @@ function activate(context) {
             const kw = KEYWORDS[word];
             if (kw) {
                 const md = new vscode.MarkdownString();
-                md.appendMarkdown(`**AmharicScript** — ቋልፍ ቃል (Keyword)\n\n`);
+                md.appendMarkdown(`**GezeLang** — ቅልፍ ቃል (Keyword)\n\n`);
                 md.appendMarkdown(`| Python | Meaning |\n`);
                 md.appendMarkdown(`|---|---|\n`);
                 md.appendMarkdown(`| \`${kw.py}\` | ${kw.desc} |\n`);
@@ -61,10 +61,10 @@ function activate(context) {
     });
 
     // Run Command
-    let runDisposable = vscode.commands.registerCommand('amharicscript.runFile', async () => {
+    let runDisposable = vscode.commands.registerCommand('gezeLang.runFile', async () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
-            vscode.window.showErrorMessage('First open an AmharicScript (.amh) file!');
+            vscode.window.showErrorMessage('First open a GezeLang (.amh) file!');
             return;
         }
 
@@ -73,14 +73,14 @@ function activate(context) {
             await document.save();
         }
 
-        const config = vscode.workspace.getConfiguration('amharicscript');
+        const config = vscode.workspace.getConfiguration('gezeLang');
         const pythonPath = config.get('pythonPath') || 'python';
         const translatorPath = config.get('translatorPath') || 'translator.py';
         const filepath = document.fileName;
 
-        let terminal = vscode.window.terminals.find(t => t.name === 'AmharicScript');
+        let terminal = vscode.window.terminals.find(t => t.name === 'GezeLang');
         if (!terminal) {
-            terminal = vscode.window.createTerminal('AmharicScript');
+            terminal = vscode.window.createTerminal('GezeLang');
         }
         terminal.show();
         terminal.sendText(`clear`);
@@ -88,7 +88,7 @@ function activate(context) {
     });
 
     // Emit Python Command
-    let emitDisposable = vscode.commands.registerCommand('amharicscript.emitPython', async () => {
+    let emitDisposable = vscode.commands.registerCommand('gezeLang.emitPython', async () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) return;
 
@@ -97,14 +97,14 @@ function activate(context) {
             await document.save();
         }
 
-        const config = vscode.workspace.getConfiguration('amharicscript');
+        const config = vscode.workspace.getConfiguration('gezeLang');
         const pythonPath = config.get('pythonPath') || 'python';
         const translatorPath = config.get('translatorPath') || 'translator.py';
         const filepath = document.fileName;
 
-        let terminal = vscode.window.terminals.find(t => t.name === 'AmharicScript');
+        let terminal = vscode.window.terminals.find(t => t.name === 'GezeLang');
         if (!terminal) {
-            terminal = vscode.window.createTerminal('AmharicScript');
+            terminal = vscode.window.createTerminal('GezeLang');
         }
         terminal.show();
         terminal.sendText(`"${pythonPath}" "${translatorPath}" "${filepath}" --emit`);
