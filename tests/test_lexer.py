@@ -2,10 +2,10 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from amharicscript.adapter import AdapterRegistry
-from amharicscript.lexer import OromLexer
+from gezeLang.adapter import AdapterRegistry
+from gezeLang.lexer import OromLexer
 
-AdapterRegistry.discover(Path(__file__).parent.parent / 'amharicscript' / 'adapters')
+AdapterRegistry.discover(Path(__file__).parent.parent / 'gezeLang' / 'adapters')
 
 def test_keyword_translation():
     src = "ስራ ሰላም():\n    አሳይ('ሰላም')"
