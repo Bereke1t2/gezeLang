@@ -1,10 +1,10 @@
-# Getting Started — AmharicScript
+# Getting Started — GezeLang
 
 ## Install
 ```bash
-pip install amharicscript
+pip install gezeLang
 # or
-git clone https://github.com/Bereke1t2/gezeLang && cd amharicscript
+git clone https://github.com/Bereke1t2/gezeLang && cd gezeLang
 ```
 
 ## Your First Program
@@ -29,7 +29,7 @@ python translator.py hello.amh
 | python translator.py --compare file.amh amharic oromo | Compare adapters |
 
 ## VS Code Extension
-1. Install: search "AmharicScript" in Extensions panel
+1. Install: search "GezeLang" in Extensions panel
 2. Open any .amh file — keywords highlight automatically
 3. Type ስራ → Tab to expand function snippet
 4. Click ▶ in editor title bar to run the file

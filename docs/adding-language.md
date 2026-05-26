@@ -1,6 +1,6 @@
 # Adding a Language
 
-AmharicScript's Plugin Architecture makes it easy to add support for any language natively in just a few steps. Everything works purely via mapping configurations.
+GezeLang's Plugin Architecture makes it easy to add support for any language natively in just a few steps. Everything works purely via mapping configurations.
 
 ## Step 1: Create an Adapter Directory
 Go to the `adapters` directory and create a new folder for the language.
