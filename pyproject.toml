@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "amharicscript"
+name = "gezeLang"
 version = "1.0.0"
 description = "Write Python in Amharic — ፕሮግራሚንግ በአማርኛ"
 readme = "README.md"
@@ -31,10 +31,10 @@ Documentation = "https://Bereke1t2.github.io/gezeLang/docs/"
 "Bug Tracker" = "https://github.com/Bereke1t2/gezeLang/issues"
 
 [project.scripts]
-amharicscript = "amharicscript.cli:main"
+gezeLang = "gezeLang.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["amharicscript"]
+packages = ["gezeLang"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
