@@ -1,7 +1,7 @@
 {
     "$lang": "afan_oromo",
     "$version": "1.0.0",
-    "$description": "Afan Oromo keyword mapping for AmharicScript",
+    "$description": "Afan Oromo keyword mapping for GezeLang",
     "hojii": "def",
     "gosa": "class",
     "yoo": "if",
