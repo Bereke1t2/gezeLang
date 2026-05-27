@@ -26,6 +26,8 @@ Ensure that all 37 keys exist. You can duplicate from `adapters/amharic/keywords
 Create a test case for your new language to ensure that your lexer picks up the right tokens. After completing the words mapping, run:
 ```bash
 python translator.py --lang oromo test_file.ext
+# or if using the installed package:
+gezeLang --lang oromo test_file.ext
 ```
 
 ## Step 4: PR to Main Repository
