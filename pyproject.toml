@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gezeLang"
-version = "1.0.0"
+version = "1.1.0"
 description = "Write Python in Amharic — ፕሮግራሚንግ በአማርኛ"
 readme = "README.md"
 license = { file = "LICENSE" }
