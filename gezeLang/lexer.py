@@ -1,7 +1,7 @@
 # lexer.py — Unicode tokenizer + Amharic→Python keyword translation
 import tokenize
 import io
-from amharicscript.adapter import AdapterRegistry, AmharicScriptError
+from gezeLang.adapter import AdapterRegistry, AmharicScriptError
 
 class AmharicLexError(AmharicScriptError):
     pass

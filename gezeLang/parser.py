@@ -1,6 +1,6 @@
 import ast
-from amharicscript.adapter import AmharicScriptError
-from amharicscript.explainer import explain_error
+from gezeLang.adapter import AmharicScriptError
+from gezeLang.explainer import explain_error
 
 class AmharicParseError(AmharicScriptError):
     pass
