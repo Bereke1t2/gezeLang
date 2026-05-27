@@ -15,7 +15,7 @@ from pathlib import Path
 # Allow running as script without installing as package
 sys.path.insert(0, str(Path(__file__).parent))
 
-from gezeLang.adapter import AdapterRegistry, AmharicScriptError
+from gezeLang.adapter import AdapterRegistry, GezeLangError
 from gezeLang.lexer import OromLexer
 from gezeLang.parser import OromParser
 from gezeLang.codegen import CodeGen
@@ -75,7 +75,7 @@ def main():
                 py_src = lexer.translate()
                 tree = OromParser().parse(py_src, original_source=source)
                 results[lang] = CodeGen().generate(tree)
-            except AmharicScriptError as e:
+            except GezeLangError as e:
                 results[lang] = f'ስህተት: {e}'
             except Exception as e:
                 results[lang] = f'ስህተት: {e}'
@@ -126,7 +126,7 @@ def main():
         # Default: execute the generated Python
         exec(compile(output_source, str(source_path), 'exec'), {'__name__': '__main__'})
 
-    except AmharicScriptError as e:
+    except GezeLangError as e:
         print(str(e), file=sys.stderr)
         sys.exit(1)
     except Exception as e:

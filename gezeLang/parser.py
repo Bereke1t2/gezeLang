@@ -1,8 +1,8 @@
 import ast
-from gezeLang.adapter import AmharicScriptError
+from gezeLang.adapter import GezeLangError
 from gezeLang.explainer import explain_error
 
-class AmharicParseError(AmharicScriptError):
+class GezeLangParseError(GezeLangError):
     pass
 
 class OromParser:
@@ -17,5 +17,5 @@ class OromParser:
         except SyntaxError as e:
             source_lines = original_source.split('\n') if original_source else []
             explanation = explain_error(e.msg, e.lineno, e.offset, source_lines)
-            raise AmharicParseError(explanation)
+            raise GezeLangParseError(explanation)
 

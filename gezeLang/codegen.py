@@ -1,8 +1,8 @@
 # codegen.py — Emits valid Python source from AST via ast.unparse()
 import ast
-from gezeLang.adapter import AmharicScriptError
+from gezeLang.adapter import GezeLangError
 
-class AmharicCodeGenError(AmharicScriptError):
+class GezeLangCodeGenError(GezeLangError):
     pass
 
 class CodeGen:
@@ -15,6 +15,6 @@ class CodeGen:
         try:
             return ast.unparse(tree)
         except Exception as e:
-            raise AmharicCodeGenError(
+            raise GezeLangCodeGenError(
                 f"ስህተት[E005] ኮድ ለማመንጨት አልተቻለም: {e}"
             )

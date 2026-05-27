@@ -1,9 +1,9 @@
 # lexer.py — Unicode tokenizer + Amharic→Python keyword translation
 import tokenize
 import io
-from gezeLang.adapter import AdapterRegistry, AmharicScriptError
+from gezeLang.adapter import AdapterRegistry, GezeLangError
 
-class AmharicLexError(AmharicScriptError):
+class GezeLangLexError(GezeLangError):
     pass
 
 class OromLexer:
@@ -21,7 +21,7 @@ class OromLexer:
                 io.StringIO(self.source).readline
             ))
         except tokenize.TokenError as e:
-            raise AmharicLexError(
+            raise GezeLangLexError(
                 f"ስህተት[E001] ቶከን ስህተት: {e}\n"
                 f"ፋይልዎን ትክክለኛ UTF-8 ቅርጸት እንዲሆን ያረጋግጡ።"
             )
@@ -33,7 +33,7 @@ class OromLexer:
         try:
             return tokenize.untokenize(translated)
         except Exception as e:
-            raise AmharicLexError(
+            raise GezeLangLexError(
                 f"ስህተት[E001] ኮድ ለማዋሃድ አልተቻለም: {e}"
             )
 

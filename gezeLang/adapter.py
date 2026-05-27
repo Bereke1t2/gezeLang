@@ -2,11 +2,11 @@
 import json
 from pathlib import Path
 
-class AmharicScriptError(Exception):
+class GezeLangError(Exception):
     """Base error — all user-facing messages must be in Amharic."""
     pass
 
-class AmharicAdapterError(AmharicScriptError):
+class GezeLangAdapterError(GezeLangError):
     pass
 
 class Adapter:
@@ -23,7 +23,7 @@ class Adapter:
             with open(kw_path, encoding='utf-8') as f:
                 data = json.load(f)
         except json.JSONDecodeError:
-            raise AmharicAdapterError(
+            raise GezeLangAdapterError(
                 f"ስህተት[E004] keywords.json ፋይል ተሳስቷል — JSON ልክ አይደለም: {kw_path}"
             )
         # keywords.json has flat structure: {"amharic_word": "python_keyword", ...}
@@ -57,7 +57,7 @@ class AdapterRegistry:
     def get(cls, lang: str) -> Adapter:
         if lang not in cls._adapters:
             available = ', '.join(cls._adapters.keys()) or 'ምንም የለም'
-            raise AmharicAdapterError(
+            raise GezeLangAdapterError(
                 f"ስህተት[E003] ቋንቋ '{lang}' አልተገኘም። "
                 f"የሚገኙ ቋንቋዎች: {available}"
             )
