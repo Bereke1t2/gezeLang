@@ -40,7 +40,13 @@ def main():
                         help='Show language statistics')
     parser.add_argument('--compare', nargs='+', metavar='LANG',
                         help='Compare adapters against a program')
+    parser.add_argument('--version', action='store_true',
+                        help='Show completely GezeLang version')
     args = parser.parse_args()
+
+    if args.version:
+        print("GezeLang v1.1.0")
+        return
 
     # Discover all adapters
     AdapterRegistry.discover(ADAPTERS_DIR)
