@@ -5,6 +5,20 @@ Format: [Semantic Versioning](https://semver.org/)
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-05-27
+### Added
+- Added full Tigrinya (ትግርኛ) language mapping to the language plugins
+- Added a `--version` flag to the cli.py to show GezeLang version
+- Added `architecture.md` to properly document the source-to-source system
+- Built unit tests targeting error explainer and language stats modules
+- Built `lists_and_dicts.amh` sample file showcasing array manipulations
+
+### Changed
+- Refactored all internal error classes cleanly from `Amharic*` to `GezeLang*` prefix formatting
+- Resolved CLI name breaking during CI deployment pipelines
+- Fixed inappropriate hardcoded terms residing in the `hello.amh` guide code
+- Patched completely remaining legacy references inside `amharicscript` core to dynamically use `gezeLang`
+
 ## [1.0.0] — 2026-05-24
 ### Added
 - Full Amharic → Python 3 transpiler (37 keywords)
