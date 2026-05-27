@@ -30,16 +30,16 @@ jobs:
         run: pytest tests/ -v --tb=short
 
       - name: Test CLI hello
-        run: amharicscript examples/hello.amh
+        run: gezeLang examples/hello.amh
 
       - name: Test CLI control_flow
-        run: amharicscript examples/control_flow.amh
+        run: gezeLang examples/control_flow.amh
 
       - name: Test CLI classes
-        run: amharicscript examples/classes.amh
+        run: gezeLang examples/classes.amh
 
       - name: List available langs
-        run: amharicscript --list-langs
+        run: gezeLang --list-langs
 
   lint:
     runs-on: ubuntu-latest
