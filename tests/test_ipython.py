@@ -3,6 +3,7 @@ tests/test_ipython.py — Tests for IPython / Google Colab gezeLang extension.
 """
 
 import pytest
+pytest.importorskip("IPython", reason="IPython is optional and not installed")
 from IPython.terminal.interactiveshell import TerminalInteractiveShell
 from pathlib import Path
 
