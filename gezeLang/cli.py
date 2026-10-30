@@ -222,6 +222,8 @@ def main():
                         help='Verify mathematical AST round-trip idempotency')
     parser.add_argument('--sourcemap', action='store_true',
                         help='Generate V3 Source Map (.py.map) for browser debugging and runtime line mapping')
+    parser.add_argument('--lsp', action='store_true',
+                        help='Start Language Server Protocol (LSP) daemon on stdio')
     parser.add_argument('--compare', nargs='+', metavar='LANG',
                         help='Compare adapters against a program')
     parser.add_argument('--version', action='store_true',
@@ -230,6 +232,11 @@ def main():
 
     # Discover all adapters
     AdapterRegistry.discover(ADAPTERS_DIR)
+
+    if args.lsp:
+        from gezeLang.lsp import run_server
+        run_server()
+        return
 
     if args.version:
         print("GezeLang v1.2.0 (WebAssembly Core + 15 Ethiopic Dialects)")
