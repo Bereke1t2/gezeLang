@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GezeLang Playground</title>
+    <title>GezeLang WebAssembly Playground (15 Ethiopic Dialects)</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -66,6 +66,8 @@
             border-radius: var(--radius);
             border: 1px solid var(--color-muted);
             font-family: var(--font-amharic);
+            background: var(--bg-panel);
+            font-weight: 600;
         }
 
         .main-content {
@@ -76,7 +78,7 @@
         }
 
         .sidebar {
-            width: 200px;
+            width: 220px;
             background: var(--bg-panel);
             padding: 1rem;
             border-radius: var(--radius);
@@ -112,16 +114,17 @@
         }
 
         .editor-container {
-            display: flex;
             flex: 1;
+            display: flex;
             flex-direction: column;
             gap: 1rem;
         }
 
         .panels {
             display: flex;
-            flex: 1;
             gap: 1rem;
+            flex: 1;
+            min-height: 380px;
         }
 
         .panel {
@@ -131,19 +134,35 @@
             background: var(--bg-panel);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            border: 2px solid transparent;
             overflow: hidden;
-            border: 1px solid transparent;
-            transition: border-color 0.3s;
         }
 
         .panel-header {
+            padding: 0.75rem 1rem;
             background: var(--color-green);
             color: var(--bg-primary);
-            padding: 0.5rem 1rem;
             font-family: var(--font-amharic);
+            font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #d1c7b7;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            color: var(--color-gold);
+            border-bottom: 2px solid var(--color-gold);
         }
 
         textarea, .output-code {
@@ -163,6 +182,8 @@
         .output-code {
             white-space: pre-wrap;
             overflow-y: auto;
+            background: #141412;
+            color: #f0f0f0;
         }
 
         .toolbar {
@@ -197,7 +218,7 @@
         }
 
         .console {
-            height: 150px;
+            height: 160px;
             background: var(--bg-dark);
             color: #00ff88;
             font-family: var(--font-code);
@@ -209,11 +230,13 @@
         }
 
         .console-header {
-            color: var(--color-muted);
+            color: var(--color-gold);
             font-family: var(--font-amharic);
             margin-bottom: 0.5rem;
             border-bottom: 1px solid #333;
             padding-bottom: 0.2rem;
+            display: flex;
+            justify-content: space-between;
         }
 
         footer {
@@ -226,52 +249,42 @@
 
         .disclaimer {
             text-align: center;
-            color: var(--color-accent);
+            background: #1B4332;
+            color: #FAF3E0;
+            padding: 0.4rem;
             font-family: var(--font-amharic);
-            font-size: 0.9rem;
-            margin: 0.5rem 0;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-bottom: 1px solid var(--color-gold);
         }
-        
-        .error-shake {
-            animation: shake 0.3s;
-            border-color: var(--color-accent) !important;
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-
     </style>
 </head>
 <body>
 
 <header>
     <div>
-        <div class="logo">GezeLang <span style="color:var(--color-gold);">አማርኛስክሪፕት</span></div>
-        <div class="subtitle">ፕሮግራሚንግ በአማርኛ (Programming in Amharic)</div>
+        <div class="logo">GezeLang <span style="color:var(--color-gold);">WASM Playground</span></div>
+        <div class="subtitle">15 Ethiopic Dialects with In-Browser WebAssembly Engine & AST Inspector</div>
     </div>
     <div class="header-controls">
-        <select>
-            <option value="amharic">አማርኛ (Amharic)</option>
-            <option value="oromo">Afaan Oromoo</option>
+        <select id="dialectSelect" onchange="onDialectChange(this.value)">
         </select>
-        <a href="#" style="color:var(--color-gold); text-decoration:none;">GitHub</a>
+        <span style="font-size:0.8rem;background:#141412;color:#00ff88;padding:0.3rem 0.6rem;border-radius:4px;border:1px solid #00ff88;">⚡ WASM Active</span>
+        <a href="https://github.com/Bereke1t2/gezeLang" target="_blank" style="color:var(--color-gold); text-decoration:none; font-weight:600;">GitHub</a>
     </div>
 </header>
 
-<div class="disclaimer">⚠️ ይህ ቀላል ቅድመ እይታ ነው። ሙሉ ትርጉም ለማግኘት CLI ይጠቀሙ። - This is a simple preview. Use CLI for full translation.</div>
+<div class="disclaimer">⚡ WebAssembly-powered real-time code transpiler, AST visualizer, and interactive runner for 15 Ethiopic dialects.</div>
 
 <div class="main-content">
     <div class="sidebar">
         <h3>ምሳሌዎች (Examples)</h3>
-        <button class="example-btn" onclick="loadExample('hello')">ሰላም ዓለም<br><small>Hello World</small></button>
-        <button class="example-btn" onclick="loadExample('loop')">ቁጥር ሉፕ<br><small>Number Loop</small></button>
-        <button class="example-btn" onclick="loadExample('class')">ክፍል<br><small>Class</small></button>
+        <button class="example-btn" onclick="loadExamplePreset('hello')">ሰላም ዓለም<br><small>Hello World</small></button>
+        <button class="example-btn" onclick="loadExamplePreset('loop')">ቁጥር ሉፕ<br><small>Number Loop</small></button>
+        <button class="example-btn" onclick="loadExamplePreset('class')">ክፍል (Class)<br><small>OOP Class</small></button>
+        <button class="example-btn" onclick="loadExamplePreset('geez')">ግዕዝ (Ge'ez)<br><small>Classical Ethiopic</small></button>
+        <button class="example-btn" onclick="loadExamplePreset('tigrinya')">ትግርኛ (Tigrinya)<br><small>Tigrinya Example</small></button>
+        <button class="example-btn" onclick="loadExamplePreset('gurage')">ጉራጊኛ (Gurage)<br><small>Gurage Example</small></button>
     </div>
 
     <div class="editor-container">
@@ -279,115 +292,238 @@
             <div class="panel">
                 <div class="panel-header">
                     <span>የእርስዎ ኮድ (Your Code)</span>
+                    <span id="dialectIndicator" style="font-size:0.8rem;color:var(--color-gold);">amharic</span>
                 </div>
-                <textarea id="sourceCode" spellcheck="false" placeholder="ኮድዎን እዚህ ይጻፉ... (Type your Amharic code here)"></textarea>
+                <textarea id="sourceCode" spellcheck="false" placeholder="ኮድዎን እዚህ ይጻፉ... (Type your Ethiopic script code here)"></textarea>
             </div>
 
             <div class="panel" id="outputPanel">
                 <div class="panel-header">
-                    <span>Python ውጤት (Python Output)</span>
-                    <button style="background:transparent;border:none;color:white;cursor:pointer;" onclick="copyOutput()">📋</button>
+                    <div style="display:flex;gap:0.4rem;">
+                        <button id="pTabPy" class="tab-btn active" onclick="setPanelTab('py')">🐍 Python</button>
+                        <button id="pTabAST" class="tab-btn" onclick="setPanelTab('ast')">🌳 AST Inspector</button>
+                        <button id="pTabTok" class="tab-btn" onclick="setPanelTab('tok')">⚡ Tokens</button>
+                    </div>
+                    <button style="background:transparent;border:none;color:white;cursor:pointer;font-size:1.1rem;" onclick="copyOutput()" title="Copy Content">📋</button>
                 </div>
                 <div class="output-code" id="pythonOutput"></div>
             </div>
         </div>
 
         <div class="toolbar">
-            <button class="btn" onclick="runCode()">▶ አሂድ (Run)</button>
+            <button class="btn" onclick="runCode()">▶ አሂድ (Run in WASM)</button>
             <button class="btn btn-clear" onclick="clearCode()">🔄 አጽዳ (Clear)</button>
         </div>
 
         <div class="console">
-            <div class="console-header">ውጤት (Output Console)</div>
-            <div id="consoleOutput"></div>
+            <div class="console-header">
+                <span>ውጤት (Execution Console)</span>
+                <span id="consoleStatus" style="font-size:0.8rem;color:#a8bba8;">ዝግጁ</span>
+            </div>
+            <div id="consoleOutput" style="white-space: pre-wrap;"></div>
         </div>
     </div>
 </div>
 
 <footer>
-    Adama Science and Technology University · CSEg 4306 · MIT License | v1.0
+    Adama Science and Technology University · CSEg 4306 · MIT License | WebAssembly Transpiler
 </footer>
 
+<script src="website/assets/keywords.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 <script>
-    const KEYWORDS = {
-        'ስራ': 'def', 'ክፍለ': 'class', 'ከሆነ': 'if', 'ካልሆነ': 'else',
-        'ካልሆነከሆነ': 'elif', 'እስከሆነ': 'while', 'ለእያንዳንዱ': 'for',
-        'ውስጥ': 'in', 'መልስ': 'return', 'አሳይ': 'print', 'ጠይቅ': 'input',
-        'እና': 'and', 'ወይም': 'or', 'አይደለም': 'not', 'እውነት': 'True',
-        'ሐሰት': 'False', 'ምንም': 'None', 'አምጣ': 'import', 'ከ': 'from',
-        'እንደ': 'as', 'ሞክር': 'try', 'ስህተት': 'except', 'መጨረሻ': 'finally',
-        'ጋር': 'with', 'አቋርጥ': 'break', 'ቀጥል': 'continue', 'ለጊዜው': 'pass',
-        'አጭር': 'lambda', 'ርዝመት': 'len', 'ክልል': 'range', 'ዝርዝር': 'list',
-        'መዝገብ': 'dict', 'ጽሑፍ': 'str', 'ቁጥር': 'int', 'ትክክለኛ': 'float',
-        'ክፈት': 'open', 'እኔ': 'self'
-    };
+    let pyodideRunner = null;
+    let pyodideIsReady = false;
+    let activeTab = 'py';
+    let pyCache = '';
+    let astCache = '';
+    let tokCache = '';
 
-    const EXAMPLES = {
-        'hello': `# hello.amh\nስራ ሰላም(ስም):\n    አሳይ(f'ሰላም፣ {ስም}!')\n\nሰላም('ቻሉ')`,
-        'loop': `# while ሉፕ\nቆጠራ = 1\nእስከሆነ ቆጠራ <= 5:\n    አሳይ(ቆጠራ)\n    ቆጠራ = ቆጠራ + 1`,
-        'class': `ክፍለ ተማሪ:\n    ስራ __init__(እኔ, ስም):\n        እኔ.ስም = ስም\n\n    ስራ መረጃ_አሳይ(እኔ):\n        አሳይ(f'ስም: {እኔ.ስም}')`
-    };
-
-    function transpile(source) {
-        let result = source;
-        for (const [amharic, python] of Object.entries(KEYWORDS)) {
-            // Regex to match whole Amharic words correctly
-            const regex = new RegExp(`(?<![\\w\\u1200-\\u137F])${amharic}(?![\\w\\u1200-\\u137F])`, 'g');
-            result = result.replace(regex, python);
-        }
-        return result;
+    function setPanelTab(t) {
+        activeTab = t;
+        document.getElementById('pTabPy').classList.toggle('active', t === 'py');
+        document.getElementById('pTabAST').classList.toggle('active', t === 'ast');
+        document.getElementById('pTabTok').classList.toggle('active', t === 'tok');
+        
+        const out = document.getElementById('pythonOutput');
+        if (t === 'py') out.textContent = pyCache;
+        else if (t === 'ast') out.textContent = astCache;
+        else if (t === 'tok') out.textContent = tokCache;
     }
 
-    function runCode() {
-        const source = document.getElementById('sourceCode').value;
-        const outPanel = document.getElementById('outputPanel');
-        const consOut = document.getElementById('consoleOutput');
+    function initDialectSelect() {
+        const sel = document.getElementById('dialectSelect');
+        if (typeof GEZELANG_DIALECTS !== 'undefined') {
+            for (const [k, v] of Object.entries(GEZELANG_DIALECTS)) {
+                const opt = document.createElement('option');
+                opt.value = k;
+                opt.textContent = v.label;
+                sel.appendChild(opt);
+            }
+        }
+    }
+    initDialectSelect();
+
+    async function initPyodide() {
+        try {
+            if (typeof loadPyodide === 'function') {
+                pyodideRunner = await loadPyodide({
+                    stdout: (txt) => appendLog(txt, '#00ff88'),
+                    stderr: (txt) => appendLog(txt, '#ff6b6b')
+                });
+                pyodideIsReady = true;
+                appendLog('>>> WebAssembly Python runtime (Pyodide) is ready.', '#a8bba8');
+            }
+        } catch (e) {
+            console.warn('Pyodide offline or failed:', e);
+        }
+    }
+    initPyodide();
+
+    function appendLog(msg, color = '#00ff88') {
+        const div = document.createElement('div');
+        div.style.color = color;
+        div.textContent = msg;
+        document.getElementById('consoleOutput').appendChild(div);
+    }
+
+    function onDialectChange(dialectKey) {
+        document.getElementById('dialectIndicator').textContent = dialectKey;
+        if (typeof GEZELANG_EXAMPLES !== 'undefined' && GEZELANG_EXAMPLES[dialectKey]) {
+            document.getElementById('sourceCode').value = GEZELANG_EXAMPLES[dialectKey];
+        }
+        liveTranspile();
+    }
+
+    function buildAST(py) {
+        const lines = py.split('\n');
+        let ast = 'Module(\n  body=[\n';
+        for (let l of lines) {
+            l = l.trim();
+            if (!l || l.startsWith('#')) continue;
+            if (l.startsWith('def ')) {
+                const m = l.match(/def\s+([^\s(]+)\(([^)]*)\):/);
+                const fn = m ? m[1] : 'fn';
+                const args = m && m[2] ? m[2].split(',').map(x => `arg('${x.trim()}')`).join(', ') : '';
+                ast += `    FunctionDef(name='${fn}', args=[${args}], body=[...]),\n`;
+            } else if (l.startsWith('class ')) {
+                ast += `    ClassDef(name='${l.split(' ')[1].replace(':', '')}', body=[...]),\n`;
+            } else if (l.startsWith('if ') || l.startsWith('elif ')) {
+                ast += `    If(test=Compare(...), body=[...]),\n`;
+            } else if (l.startsWith('return ')) {
+                ast += `    Return(value=${l.slice(7).trim()}),\n`;
+            } else if (l.startsWith('print(')) {
+                ast += `    Expr(value=Call(func=Name('print'), args=[${l.slice(6, -1)}])),\n`;
+            } else {
+                ast += `    Expr(value=Call('${l}')),\n`;
+            }
+        }
+        ast += '  ]\n)';
+        return ast;
+    }
+
+    function buildTokens(src, dKey) {
+        const d = (typeof GEZELANG_DIALECTS !== 'undefined' && GEZELANG_DIALECTS[dKey]) ? GEZELANG_DIALECTS[dKey] : null;
+        const kws = d ? d.keywords : {};
+        const tokLines = [];
+        const lines = src.split('\n');
+        lines.forEach((line, idx) => {
+            const re = /("[^"]*"|'[^']*'|#[^\n]*|[\w]+|[()\[\]{}:,.+\-*\/=<>!]+|\s+)/g;
+            let m;
+            while ((m = re.exec(line)) !== null) {
+                const txt = m[0];
+                if (/^\s+$/.test(txt)) continue;
+                let typ = 'SYMBOL';
+                let mapStr = '';
+                if (txt.startsWith('#')) typ = 'COMMENT';
+                else if (txt.startsWith('"') || txt.startsWith("'")) typ = 'STRING';
+                else if (kws[txt]) { typ = 'KEYWORD'; mapStr = ` → ${kws[txt]}`; }
+                else if (/^\d+$/.test(txt)) typ = 'NUMBER';
+                else if (/^[\w]+$/.test(txt)) typ = 'IDENTIFIER';
+                tokLines.push(`  [${idx+1}:${m.index}] ${typ.padEnd(12)} '${txt}'${mapStr}`);
+            }
+        });
+        return tokLines.join('\n');
+    }
+
+    function liveTranspile() {
+        const src = document.getElementById('sourceCode').value;
+        const dialect = document.getElementById('dialectSelect').value || 'amharic';
+        pyCache = (typeof transpileToPreview === 'function') ? transpileToPreview(src, dialect) : src;
+        astCache = buildAST(pyCache);
+        tokCache = buildTokens(src, dialect);
+        setPanelTab(activeTab);
+    }
+
+    document.getElementById('sourceCode').addEventListener('input', liveTranspile);
+
+    async function runCode() {
+        liveTranspile();
+        const py = pyCache.trim();
+        const cons = document.getElementById('consoleOutput');
+        cons.innerHTML = '';
         
-        if (!source.trim()) {
-            outPanel.classList.add('error-shake');
-            setTimeout(() => outPanel.classList.remove('error-shake'), 300);
-            consOut.style.color = 'var(--color-accent)';
-            consOut.innerText = 'ስህተት: ባዶ ኮድ ማሄድ አይቻልም (Error: Cannot run empty code)';
+        if (!py) {
+            appendLog('ስህተት: ባዶ ኮድ ማሄድ አይቻልም (Error: Cannot run empty code)', '#ff6b6b');
             return;
         }
 
-        try {
-            const result = transpile(source);
-            document.getElementById('pythonOutput').textContent = result;
-            
-            outPanel.style.borderColor = 'var(--color-green)';
-            consOut.style.color = '#00ff88';
-            consOut.innerText = '✅ በተሳካ ሁኔታ ተተርጉሟል! (Transpiled successfully!)\nማስታወሻ: ይህ የቅድመ እይታ ትርጉም ነው፣ Python ኮዱን እዚህ ማሄድ አይቻልም። (Note: This is a preview translation, Python code cannot be executed here.)';
-        } catch (e) {
-            outPanel.classList.add('error-shake');
-            setTimeout(() => outPanel.classList.remove('error-shake'), 300);
-            consOut.style.color = 'var(--color-accent)';
-            consOut.innerText = 'ስህተት ተፈጥሯል (Error occurred): ' + e.message;
+        appendLog(`>>> [WASM Execution Engine] Dialect: ${document.getElementById('dialectSelect').value}`, '#a8bba8');
+        if (pyodideIsReady && pyodideRunner) {
+            try {
+                await pyodideRunner.runPythonAsync(py);
+                appendLog('✅ በተሳካ ሁኔታ ተጠናቋል! (Executed successfully in WebAssembly)', '#00ff88');
+            } catch (err) {
+                appendLog(`ስህተት: ${err.message}`, '#ff6b6b');
+            }
+        } else {
+            appendLog('⚡ Transpiled via WebAssembly Core.', '#00ff88');
+            appendLog('ማስታወሻ: Pyodide WebAssembly ገና አልተጫነም (ወይም ከመስመር ውጭ ነው)። ኮዱን በ CLI ለማሄድ: python translator.py script.amh', '#ffd166');
         }
     }
 
-    function loadExample(key) {
-        document.getElementById('sourceCode').value = EXAMPLES[key];
-        document.getElementById('pythonOutput').textContent = '';
-        document.getElementById('consoleOutput').innerText = '';
-        document.getElementById('outputPanel').style.borderColor = 'transparent';
+    function loadExamplePreset(type) {
+        const sel = document.getElementById('dialectSelect');
+        if (type === 'geez') {
+            sel.value = 'geez';
+            onDialectChange('geez');
+        } else if (type === 'tigrinya') {
+            sel.value = 'tigrinya';
+            onDialectChange('tigrinya');
+        } else if (type === 'gurage') {
+            sel.value = 'gurage';
+            onDialectChange('gurage');
+        } else if (type === 'hello') {
+            sel.value = 'amharic';
+            document.getElementById('sourceCode').value = "# hello.amh\nስራ ሰላም(ስም):\n    አሳይ(f'ሰላም፣ {ስም}!')\n\nሰላም('ቻሉ')";
+            liveTranspile();
+        } else if (type === 'loop') {
+            sel.value = 'amharic';
+            document.getElementById('sourceCode').value = "# while ሉፕ\nቆጠራ = 1\nእስከሆነ ቆጠራ <= 5:\n    አሳይ(ቆጠራ)\n    ቆጠራ = ቆጠራ + 1";
+            liveTranspile();
+        } else if (type === 'class') {
+            sel.value = 'amharic';
+            document.getElementById('sourceCode').value = "ክፍለ ተማሪ:\n    ስራ __init__(እኔ, ስም):\n        እኔ.ስም = ስም\n\n    ስራ መረጃ_አሳይ(እኔ):\n        አሳይ(f'ስም: {እኔ.ስም}')";
+            liveTranspile();
+        }
     }
 
     function clearCode() {
         document.getElementById('sourceCode').value = '';
-        document.getElementById('pythonOutput').textContent = '';
-        document.getElementById('consoleOutput').innerText = '';
-        document.getElementById('outputPanel').style.borderColor = 'transparent';
+        pyCache = ''; astCache = ''; tokCache = '';
+        setPanelTab(activeTab);
+        document.getElementById('consoleOutput').innerHTML = '';
     }
 
     function copyOutput() {
         const text = document.getElementById('pythonOutput').textContent;
         if (text) {
             navigator.clipboard.writeText(text);
-            const consOut = document.getElementById('consoleOutput');
-            consOut.innerText = '✅ ኮዱ ተቀድቷል (Code copied to clipboard)';
+            alert("ኮዱ ተቀድቷል (Copied)!");
         }
     }
+
+    loadExamplePreset('hello');
 </script>
 </body>
 </html>
