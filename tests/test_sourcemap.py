@@ -123,8 +123,9 @@ def test_cli_sourcemap_flag(tmp_path):
     source_file.write_text("ስራ ፈትሽ():\n    መልስ እውነት\n", encoding='utf-8')
 
     import subprocess
+    import sys
     cmd = [
-        Path.cwd() / ".venv/bin/python",
+        sys.executable,
         "-m", "gezeLang.cli",
         str(source_file),
         "--emit",
