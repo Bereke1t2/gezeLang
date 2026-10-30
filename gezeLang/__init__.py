@@ -4,6 +4,9 @@ from gezeLang.lexer import OromLexer
 from gezeLang.parser import OromParser
 from .codegen import CodeGen
 from .batch import transpile_batch, parse_batch, benchmark_batch
+from .reverse import reverse_transpile, verify_round_trip
+from .sourcemap import SourceMap, SourceMapGenerator, SourceMapConsumer
+from .lsp import LanguageServer
 from pathlib import Path
 
 _ADAPTERS_DIR = Path(__file__).parent / 'adapters'
@@ -22,3 +25,13 @@ def execute(source: str, lang: str = 'amharic') -> None:
     """Transpile and execute Amharic source string."""
     py_source = transpile(source, lang=lang)
     exec(compile(py_source, '<gezeLang>', 'exec'), {'__name__': '__main__'})
+
+def load_ipython_extension(ipython):
+    """Entry point for IPython / Jupyter `%load_ext gezelang`."""
+    from gezeLang.ipython import load_ipython_extension as _load
+    _load(ipython)
+
+def unload_ipython_extension(ipython):
+    """Entry point for IPython / Jupyter `%unload_ext gezelang`."""
+    from gezeLang.ipython import unload_ipython_extension as _unload
+    _unload(ipython)

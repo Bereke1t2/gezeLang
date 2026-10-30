@@ -45,6 +45,7 @@
         <button id="runBtn" class="btn">▶ አሂድ (Run in WASM)</button>
         <span style="font-size: 0.8em; opacity: 0.8">💡 Ctrl+Enter</span>
         <button id="clearBtn" class="btn" style="background: var(--bg-panel); color: var(--green);">🔄 አጽዳ</button>
+        <button id="swapBtn" class="btn" style="background: #1D4ED8; color: white;">⇄ አቅጣጫ ቀይር (Ethiopic ⇄ Python)</button>
         
         <div style="margin-left: auto; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
             <span id="wasmBadge" style="font-size: 0.75rem; background: #1B4332; color: #fff; padding: 0.25rem 0.6rem; border-radius: 4px; border: 1px solid var(--gold);">⚡ WebAssembly Core: Active (15 Dialects)</span>
@@ -55,7 +56,7 @@
     <div class="playground-container">
         <div class="pane">
             <div class="pane-header">
-                <span>የእርስዎ ኮድ (Your Code)</span>
+                <span id="inputPaneTitle">የእርስዎ ኮድ (Your Code)</span>
                 <select id="langSelect"
                     style="padding: 0.3rem 0.6rem; border-radius: var(--radius); border: 1px solid var(--green); background: var(--bg-panel); font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;">
                 </select>
@@ -105,7 +106,10 @@
         const wasmBadge = document.getElementById('wasmBadge');
         const pyodideBadge = document.getElementById('pyodideBadge');
         const execStatus = document.getElementById('execStatus');
+        const swapBtn = document.getElementById('swapBtn');
+        const inputPaneTitle = document.getElementById('inputPaneTitle');
 
+        let isReverseMode = false;
         let currentTab = 'python';
         let pyodideInstance = null;
         let pyodideReady = false;
@@ -216,16 +220,44 @@
             runTranslation();
         }
 
-        // Real-time translation via WebAssembly
+        // Real-time translation via WebAssembly / Reverse Transpiler
         function runTranslation() {
             const source = codeInput.value;
             const lang = langSelect.value;
-            cachedPython = transpileToPreview(source, lang);
-            cachedAST = generateAST(cachedPython);
-            cachedTokens = generateTokens(source, lang);
+            if (isReverseMode) {
+                cachedPython = typeof transpilePythonToEthiopic === 'function' ? transpilePythonToEthiopic(source, lang) : source;
+                cachedAST = generateAST(source);
+                cachedTokens = generateTokens(cachedPython, lang);
+            } else {
+                cachedPython = transpileToPreview(source, lang);
+                cachedAST = generateAST(cachedPython);
+                cachedTokens = generateTokens(source, lang);
+            }
             
             switchViewTab(currentTab);
             codeOutput.style.borderColor = 'var(--green)';
+        }
+
+        // Toggle bidirectional mode: Ethiopic -> Python vs Python -> Ethiopic
+        function toggleSwapMode() {
+            isReverseMode = !isReverseMode;
+            const currentInput = codeInput.value;
+            const currentOutput = codeOutput.innerText;
+
+            codeInput.value = currentOutput || '';
+            
+            if (isReverseMode) {
+                inputPaneTitle.innerText = 'የእርስዎ Python ኮድ (Input Python)';
+                document.getElementById('tabPython').innerText = '🇪🇹 GezeLang ውጤት';
+                swapBtn.style.background = '#047857';
+                swapBtn.innerText = '⇄ አቅጣጫ ቀይር (Python → Ethiopic)';
+            } else {
+                inputPaneTitle.innerText = 'የእርስዎ ኮድ (Your Code)';
+                document.getElementById('tabPython').innerText = '🐍 Python ውጤት';
+                swapBtn.style.background = '#1D4ED8';
+                swapBtn.innerText = '⇄ አቅጣጫ ቀይር (Ethiopic → Python)';
+            }
+            runTranslation();
         }
 
         // Initialize Pyodide WebAssembly Python Runtime
@@ -259,7 +291,7 @@
         // Run code inside WebAssembly
         async function executeCode() {
             runTranslation();
-            const pyCode = cachedPython.trim();
+            const pyCode = isReverseMode ? codeInput.value.trim() : cachedPython.trim();
             if (!pyCode) {
                 appendConsole('⚠️ ባዶ ኮድ ማሄድ አይቻልም (Cannot run empty code)', '#ffaa00');
                 return;
@@ -289,6 +321,7 @@
         codeInput.addEventListener('input', runTranslation);
         langSelect.addEventListener('change', () => loadDialectExample(langSelect.value));
         runBtn.addEventListener('click', executeCode);
+        swapBtn.addEventListener('click', toggleSwapMode);
 
         codeInput.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {

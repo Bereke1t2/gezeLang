@@ -23,8 +23,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pytest pytest-cov
-          pip install -e .
+          pip install pytest pytest-cov ipython
+          pip install -e ".[jupyter]"
 
       - name: Run tests
         run: pytest tests/ -v --tb=short
