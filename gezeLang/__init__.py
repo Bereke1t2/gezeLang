@@ -5,6 +5,7 @@ from gezeLang.parser import OromParser
 from .codegen import CodeGen
 from .batch import transpile_batch, parse_batch, benchmark_batch
 from .reverse import reverse_transpile, verify_round_trip
+from .sourcemap import SourceMap, SourceMapGenerator, SourceMapConsumer
 from pathlib import Path
 
 _ADAPTERS_DIR = Path(__file__).parent / 'adapters'

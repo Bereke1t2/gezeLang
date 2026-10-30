@@ -220,6 +220,8 @@ def main():
                         help='Python ኮድን ወደ Ethiopic script ቀይር (Reverse transpile Python to GezeLang)')
     parser.add_argument('--round-trip', action='store_true',
                         help='Verify mathematical AST round-trip idempotency')
+    parser.add_argument('--sourcemap', action='store_true',
+                        help='Generate V3 Source Map (.py.map) for browser debugging and runtime line mapping')
     parser.add_argument('--compare', nargs='+', metavar='LANG',
                         help='Compare adapters against a program')
     parser.add_argument('--version', action='store_true',
@@ -343,6 +345,14 @@ def main():
         # --emit: write .py file only
         if args.emit:
             out_path = source_path.with_suffix('.py')
+            if args.sourcemap:
+                from gezeLang.sourcemap import SourceMapGenerator
+                generator = SourceMapGenerator(file=out_path.name, source_file=source_path.name)
+                _, smap = generator.generate(source, lang=args.lang)
+                map_path = source_path.with_suffix('.py.map')
+                map_path.write_text(smap.to_json(indent=2), encoding='utf-8')
+                output_source += smap.get_source_mapping_comment(inline=False, map_file=map_path.name)
+                print(f"🗺️  V3 Source Map ተፈጠረ: {map_path}")
             out_path.write_text(output_source, encoding='utf-8')
             print(f"✅ ተፈጠረ: {out_path}")
             return
