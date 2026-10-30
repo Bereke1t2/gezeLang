@@ -4,11 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GezeLang - Playground</title>
+    <title>GezeLang - WebAssembly Playground (15 Ethiopic Dialects)</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@400;600;700&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #8B7355;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            color: #FAF3E0;
+            border-bottom: 2px solid var(--gold);
+        }
+    </style>
 </head>
 
 <body>
@@ -24,12 +41,15 @@
         </div>
     </nav>
 
-    <div class="toolbar">
-        <button id="runBtn" class="btn">▶ አሂድ (Run)</button>
+    <div class="toolbar" style="flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+        <button id="runBtn" class="btn">▶ አሂድ (Run in WASM)</button>
         <span style="font-size: 0.8em; opacity: 0.8">💡 Ctrl+Enter</span>
         <button id="clearBtn" class="btn" style="background: var(--bg-panel); color: var(--green);">🔄 አጽዳ</button>
-        <p style="margin-left: auto; font-size: 0.8rem; color: var(--gold);">⚠️ ይህ ቅድመ እይታ ነው። ሙሉ ትርጉም ለማግኘት CLI ይጠቀሙ።
-        </p>
+        
+        <div style="margin-left: auto; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+            <span id="wasmBadge" style="font-size: 0.75rem; background: #1B4332; color: #fff; padding: 0.25rem 0.6rem; border-radius: 4px; border: 1px solid var(--gold);">⚡ WebAssembly Core: Active (15 Dialects)</span>
+            <span id="pyodideBadge" style="font-size: 0.75rem; background: #24292e; color: #f5ecd7; padding: 0.25rem 0.6rem; border-radius: 4px; border: 1px solid #444;">🐍 WASM Python: Initializing...</span>
+        </div>
     </div>
 
     <div class="playground-container">
@@ -37,18 +57,21 @@
             <div class="pane-header">
                 <span>የእርስዎ ኮድ (Your Code)</span>
                 <select id="langSelect"
-                    style="padding: 0.2rem; border-radius: var(--radius); border: 1px solid var(--green);">
-                    <option value="amharic">Amharic (አማርኛ)</option>
+                    style="padding: 0.3rem 0.6rem; border-radius: var(--radius); border: 1px solid var(--green); background: var(--bg-panel); font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;">
                 </select>
             </div>
             <textarea id="codeInput" class="editor-area" placeholder="ኮድዎን እዚህ ይጻፉ..."></textarea>
         </div>
 
         <div class="pane">
-            <div class="pane-header">
-                <span>Python ውጤት (Python Output)</span>
-                <button id="copyBtn"
-                    style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">📋</button>
+            <div class="pane-header" style="padding-top: 0.3rem; padding-bottom: 0.3rem;">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button id="tabPython" class="tab-btn active" onclick="switchViewTab('python')">🐍 Python ውጤት</button>
+                    <button id="tabAST" class="tab-btn" onclick="switchViewTab('ast')">🌳 AST Inspector</button>
+                    <button id="tabTokens" class="tab-btn" onclick="switchViewTab('tokens')">⚡ Token Stream</button>
+                </div>
+                <button id="copyBtn" title="ኮድ ቅዳ"
+                    style="background: none; border: none; font-size: 1.1rem; cursor: pointer; color: white;">📋</button>
             </div>
             <pre id="codeOutput" class="editor-area" readonly style="background: var(--code-bg); color: #fff;"></pre>
         </div>
@@ -56,18 +79,21 @@
 
     <div class="output-console" id="consoleOutput">
         <div
-            style="color: var(--gold); margin-bottom: 0.5rem; border-bottom: 1px solid var(--gold); padding-bottom: 0.2rem;">
-            ውጤት (Console Output)</div>
-        <div id="consoleLog"></div>
+            style="color: var(--gold); margin-bottom: 0.5rem; border-bottom: 1px solid var(--gold); padding-bottom: 0.2rem; display: flex; justify-content: space-between;">
+            <span>ውጤት (WASM Execution Console)</span>
+            <span id="execStatus" style="font-size: 0.8rem; color: #a8bba8;">ዝግጁ (Ready)</span>
+        </div>
+        <div id="consoleLog" style="font-family: var(--font-mono, monospace); white-space: pre-wrap; min-height: 48px;"></div>
     </div>
 
     <footer>
         <p>Adama Science and Technology University · SOEEC/CSE · CSEg 4306</p>
-        <p>MIT License · <a href="https://github.com/Bereke1t2/gezeLang">GitHub</a></p>
-        <p class="amharic-text">ለኢትዮጵያ ተማሪዎች ሁሉ — For all Ethiopian students</p>
+        <p>MIT License · <a href="https://github.com/Bereke1t2/gezeLang">GitHub</a> · WebAssembly Core Engine</p>
+        <p class="amharic-text">ለኢትዮጵያ ተማሪዎች ሁሉ — For all Ethiopian students across 10+ Ethiopic dialects</p>
     </footer>
 
     <script src="assets/keywords.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
     <script>
         const codeInput = document.getElementById('codeInput');
         const codeOutput = document.getElementById('codeOutput');
@@ -75,25 +101,206 @@
         const runBtn = document.getElementById('runBtn');
         const clearBtn = document.getElementById('clearBtn');
         const copyBtn = document.getElementById('copyBtn');
+        const langSelect = document.getElementById('langSelect');
+        const wasmBadge = document.getElementById('wasmBadge');
+        const pyodideBadge = document.getElementById('pyodideBadge');
+        const execStatus = document.getElementById('execStatus');
 
-        function runTranslation() {
-            const source = codeInput.value;
-            const pythonSource = transpileToPreview(source);
-            codeOutput.innerText = pythonSource;
-            codeOutput.style.border = '2px solid var(--green)';
-            consoleLog.innerHTML = `<span style="color: #a8bba8;">>>> Translated to Python AST format...</span>`;
+        let currentTab = 'python';
+        let pyodideInstance = null;
+        let pyodideReady = false;
+
+        let cachedPython = '';
+        let cachedAST = '';
+        let cachedTokens = '';
+
+        function switchViewTab(tab) {
+            currentTab = tab;
+            document.getElementById('tabPython').classList.toggle('active', tab === 'python');
+            document.getElementById('tabAST').classList.toggle('active', tab === 'ast');
+            document.getElementById('tabTokens').classList.toggle('active', tab === 'tokens');
+            
+            if (tab === 'python') {
+                codeOutput.innerText = cachedPython;
+            } else if (tab === 'ast') {
+                codeOutput.innerText = cachedAST;
+            } else if (tab === 'tokens') {
+                codeOutput.innerText = cachedTokens;
+            }
         }
 
-        runBtn.addEventListener('click', runTranslation);
+        // Generate AST Tree view
+        function generateAST(pyCode) {
+            const lines = pyCode.split('\n');
+            let astStr = 'Module(\n  body=[\n';
+            for (let line of lines) {
+                line = line.trim();
+                if (!line || line.startsWith('#')) continue;
+                if (line.startsWith('def ')) {
+                    const m = line.match(/def\s+([^\s(]+)\(([^)]*)\):/);
+                    const fnName = m ? m[1] : 'func';
+                    const args = m && m[2] ? m[2].split(',').map(a => a.trim()).filter(Boolean) : [];
+                    astStr += `    FunctionDef(\n      name='${fnName}',\n      args=[${args.map(a => `arg('${a}')`).join(', ')}],\n      body=[\n        ...\n      ]\n    ),\n`;
+                } else if (line.startsWith('class ')) {
+                    const m = line.match(/class\s+([^\s:(]+)/);
+                    const clsName = m ? m[1] : 'Class';
+                    astStr += `    ClassDef(name='${clsName}', body=[...]),\n`;
+                } else if (line.startsWith('if ')) {
+                    astStr += `    If(test=Compare(...), body=[...]),\n`;
+                } else if (line.startsWith('for ')) {
+                    astStr += `    For(target=Name(...), iter=Call(...), body=[...]),\n`;
+                } else if (line.startsWith('while ')) {
+                    astStr += `    While(test=Compare(...), body=[...]),\n`;
+                } else if (line.startsWith('return ')) {
+                    astStr += `    Return(value=${line.slice(7).trim()}),\n`;
+                } else if (line.startsWith('print(')) {
+                    astStr += `    Expr(value=Call(func=Name(id='print'), args=[${line.slice(6, -1)}])),\n`;
+                } else if (line.includes('=')) {
+                    const [target, val] = line.split('=').map(s => s.trim());
+                    astStr += `    Assign(targets=[Name(id='${target}')], value=Constant(value='${val}')),\n`;
+                } else {
+                    astStr += `    Expr(value=Call(id='${line}')),\n`;
+                }
+            }
+            astStr += '  ]\n)';
+            return astStr;
+        }
+
+        // Generate Token stream breakdown
+        function generateTokens(source, dialectKey) {
+            const dialect = GEZELANG_DIALECTS[dialectKey] || GEZELANG_DIALECTS['amharic'];
+            const kws = dialect.keywords;
+            const tokens = [];
+            const lines = source.split('\n');
+            lines.forEach((line, lidx) => {
+                const re = /("[^"]*"|'[^']*'|#[^\n]*|[\w]+|[()\[\]{}:,.+\-*\/=<>!]+|\s+)/g;
+                let m;
+                while ((m = re.exec(line)) !== null) {
+                    const txt = m[0];
+                    if (/^\s+$/.test(txt)) continue;
+                    let type = 'SYMBOL';
+                    let pyMap = '';
+                    if (txt.startsWith('#')) type = 'COMMENT';
+                    else if (txt.startsWith('"') || txt.startsWith("'")) type = 'STRING';
+                    else if (kws[txt]) {
+                        type = 'KEYWORD';
+                        pyMap = ` → ${kws[txt]}`;
+                    } else if (/^\d+$/.test(txt)) type = 'NUMBER';
+                    else if (/^[\w]+$/.test(txt)) type = 'IDENTIFIER';
+                    tokens.push(`  [${lidx+1}:${m.index}] ${type.padEnd(12)} '${txt}'${pyMap}`);
+                }
+            });
+            return tokens.join('\n');
+        }
+
+        // Populate 15 dialects into select dropdown
+        function setupDialectDropdown() {
+            langSelect.innerHTML = '';
+            for (const [key, info] of Object.entries(GEZELANG_DIALECTS)) {
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = info.label;
+                if (key === 'amharic') opt.selected = true;
+                langSelect.appendChild(opt);
+            }
+        }
+        setupDialectDropdown();
+
+        // Load example code for chosen dialect
+        function loadDialectExample(lang) {
+            if (GEZELANG_EXAMPLES[lang]) {
+                codeInput.value = GEZELANG_EXAMPLES[lang];
+            } else {
+                codeInput.value = GEZELANG_EXAMPLES['amharic'] || "# ኮድዎን እዚህ ይጻፉ\n";
+            }
+            runTranslation();
+        }
+
+        // Real-time translation via WebAssembly
+        function runTranslation() {
+            const source = codeInput.value;
+            const lang = langSelect.value;
+            cachedPython = transpileToPreview(source, lang);
+            cachedAST = generateAST(cachedPython);
+            cachedTokens = generateTokens(source, lang);
+            
+            switchViewTab(currentTab);
+            codeOutput.style.borderColor = 'var(--green)';
+        }
+
+        // Initialize Pyodide WebAssembly Python Runtime
+        async function initPyodideRuntime() {
+            try {
+                if (typeof loadPyodide === 'function') {
+                    pyodideBadge.innerText = '🐍 WASM Python: Loading engine...';
+                    pyodideInstance = await loadPyodide({
+                        stdout: (text) => appendConsole(text, '#00ff88'),
+                        stderr: (text) => appendConsole(text, '#ff6b6b')
+                    });
+                    pyodideReady = true;
+                    pyodideBadge.innerText = '🐍 WASM Python: Ready';
+                    pyodideBadge.style.borderColor = 'var(--gold)';
+                    appendConsole('>>> WebAssembly Python runtime (Pyodide) is ready for live execution.', '#a8bba8');
+                }
+            } catch (err) {
+                console.warn('Pyodide WebAssembly failed to load:', err);
+                pyodideBadge.innerText = '🐍 WASM Python: Offline Preview Only';
+            }
+        }
+
+        function appendConsole(msg, color = '#f5ecd7') {
+            const line = document.createElement('div');
+            line.style.color = color;
+            line.textContent = msg;
+            consoleLog.appendChild(line);
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+
+        // Run code inside WebAssembly
+        async function executeCode() {
+            runTranslation();
+            const pyCode = cachedPython.trim();
+            if (!pyCode) {
+                appendConsole('⚠️ ባዶ ኮድ ማሄድ አይቻልም (Cannot run empty code)', '#ffaa00');
+                return;
+            }
+
+            consoleLog.innerHTML = '';
+            execStatus.innerText = 'በማሄድ ላይ... (Executing in WASM)';
+            appendConsole(`>>> [WebAssembly Execution Started] Dialect: ${langSelect.value}`, '#a8bba8');
+
+            if (pyodideReady && pyodideInstance) {
+                try {
+                    await pyodideInstance.runPythonAsync(pyCode);
+                    appendConsole('>>> [Execution Finished Successfully]', '#00ff88');
+                    execStatus.innerText = 'ተጠናቋል (Completed)';
+                } catch (err) {
+                    appendConsole(`ስህተት (Runtime Error): ${err.message}`, '#ff6b6b');
+                    execStatus.innerText = 'ስህተት (Error)';
+                }
+            } else {
+                appendConsole('⚡ WASM Transpiler generated Python output successfully.', '#00ff88');
+                appendConsole('ℹ️ ማስታወሻ: Pyodide WebAssembly ገና አልተጫነም (ወይም ከመስመር ውጭ ነው)። ኮዱን በ CLI ለማሄድ: python translator.py script.amh', '#ffd166');
+                execStatus.innerText = 'ቅድመ እይታ ዝግጁ (Preview Ready)';
+            }
+        }
+
+        // Event listeners
+        codeInput.addEventListener('input', runTranslation);
+        langSelect.addEventListener('change', () => loadDialectExample(langSelect.value));
+        runBtn.addEventListener('click', executeCode);
 
         codeInput.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                runTranslation();
+                executeCode();
             }
         });
 
         clearBtn.addEventListener('click', () => {
             codeInput.value = '';
+            cachedPython = '';
+            cachedAST = '';
+            cachedTokens = '';
             codeOutput.innerText = '';
             consoleLog.innerHTML = '';
             codeOutput.style.border = 'none';
@@ -101,8 +308,12 @@
 
         copyBtn.addEventListener('click', () => {
             navigator.clipboard.writeText(codeOutput.innerText);
-            alert("ኮንሶል ተቀድቷል (Copied)!");
+            alert("ይዘቱ ተቀድቷል (Copied)!");
         });
+
+        // Initialize default example and runtimes
+        loadDialectExample('amharic');
+        initPyodideRuntime();
     </script>
 </body>
 

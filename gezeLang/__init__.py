@@ -3,6 +3,7 @@ from gezeLang.adapter import AdapterRegistry
 from gezeLang.lexer import OromLexer
 from gezeLang.parser import OromParser
 from .codegen import CodeGen
+from .batch import transpile_batch, parse_batch, benchmark_batch
 from pathlib import Path
 
 _ADAPTERS_DIR = Path(__file__).parent / 'adapters'
