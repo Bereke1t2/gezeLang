@@ -24,6 +24,23 @@
 
 ---
 
+## 🌍 About GezeLang: The Vision
+
+For over **120 million people** across Ethiopia and the Horn of Africa, learning computer science has historically required overcoming a foreign language barrier (English syntax) at the exact moment they are trying to master algorithmic reasoning.
+
+**GezeLang** removes this cognitive barrier. It empowers students, educators, and software engineers to write programs in indigenous Ethiopic scripts (Amharic, Classical Ge'ez, Tigrinya, Gurage, Gojjami, Gondari, Wollo, Wolaytta, Harari, Silt'e, etc.) while compiling to **standard Python 3 with zero runtime overhead** and full access to the global Python ecosystem (NumPy, PyTorch, Pandas, Matplotlib).
+
+### 💼 Engineering Resume & Big Tech Showcase Highlights
+*Key engineering achievements demonstrated in this project:*
+- **🚀 High-Throughput Compiler Architecture**: Engineered C-accelerated and cached regex token scanners achieving **~0.045s parse times on 1MB batch files** (>22 MB/s throughput), outperforming benchmark targets by 13x.
+- **🔄 Mathematical AST Idempotency**: Designed bidirectional transpilation (`Python ↔ GezeLang`) with mathematical AST idempotency validation: $\text{AST}(\text{Forward}(\text{Reverse}(C))) \equiv \text{AST}(C)$.
+- **🌐 WebAssembly & Edge Execution**: Built a zero-allocation WebAssembly core engine running client-side with Pyodide in modern web browsers.
+- **🗺️ Production V3 Source Maps**: Authored an RFC-compliant Base64 VLQ source map encoder/decoder enabling DevTools debugging and automatic runtime traceback redirection.
+- **💡 Language Server Protocol (LSP)**: Implemented JSON-RPC 2.0 language server delivering real-time diagnostics, autocompletion, hover documentation, and symbol navigation.
+- **📓 Cloud Notebook Integration**: Architected an IPython kernel extension (`%%gezelang`) running seamlessly in Google Colab with shared namespace memory.
+
+---
+
 ## ⚡ Key Architectural Highlights
 
 - **🚀 Sub-0.6s Parse Throughput**: High-performance compiler pipeline achieving **~0.045s parse times on 1MB batch files** (>22 MB/s throughput) with native WebAssembly acceleration.
