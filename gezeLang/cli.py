@@ -29,6 +29,7 @@ from gezeLang.parser import OromParser
 from gezeLang.codegen import CodeGen
 from gezeLang.batch import benchmark_batch
 from gezeLang.explainer import explain_runtime_exception
+from gezeLang.reverse import reverse_transpile, verify_round_trip
 
 ADAPTERS_DIR = Path(__file__).parent / 'adapters'
 
@@ -106,6 +107,8 @@ def start_repl(initial_lang: str = 'amharic'):
 REPL Commands:
   :lang <name>   Switch dialect (e.g. :lang geez, :lang tigrinya)
   :list          List all 15 supported dialects
+  :reverse <py>  Reverse transpile Python code to Ethiopic script
+  :roundtrip <py>Verify mathematical AST round-trip idempotency
   :ast <code>    Print AST tree of code
   :tokens <code> Print token breakdown of code
   :bench         Run live 1MB batch throughput benchmark
@@ -123,6 +126,22 @@ REPL Commands:
                     print(f"✅ Dialect switched to: {current_lang}")
                 else:
                     print(f"⚠️ Unknown dialect. Use :list to see available dialects.")
+                continue
+            elif stripped.startswith(':reverse'):
+                py_code = stripped[8:].strip()
+                res = reverse_transpile(py_code, lang=current_lang)
+                print(f"\n{res}\n")
+                continue
+            elif stripped.startswith(':roundtrip'):
+                py_code = stripped[10:].strip()
+                try:
+                    is_identical, orig_ast, recompiled_ast = verify_round_trip(py_code, lang=current_lang)
+                    if is_identical:
+                        print("✅ Round-trip AST Idempotency Verified! (AST(Forward(Reverse(code))) == AST(code))")
+                    else:
+                        print("❌ AST Mismatch detected during round-trip.")
+                except Exception as err:
+                    print(f"❌ Round-trip validation error: {err}")
                 continue
             elif stripped.startswith(':ast'):
                 code_to_inspect = stripped[4:].strip()
@@ -197,6 +216,10 @@ def main():
                         help='የሚገኙ 10+ ቋንቋዎችን አሳይ')
     parser.add_argument('--stats', action='store_true',
                         help='Show language statistics')
+    parser.add_argument('--reverse', action='store_true',
+                        help='Python ኮድን ወደ Ethiopic script ቀይር (Reverse transpile Python to GezeLang)')
+    parser.add_argument('--round-trip', action='store_true',
+                        help='Verify mathematical AST round-trip idempotency')
     parser.add_argument('--compare', nargs='+', metavar='LANG',
                         help='Compare adapters against a program')
     parser.add_argument('--version', action='store_true',
@@ -235,6 +258,31 @@ def main():
         sys.exit(1)
 
     source = source_path.read_text(encoding='utf-8')
+
+    if args.reverse:
+        ethiopic_source = reverse_transpile(source, lang=args.lang)
+        if args.emit:
+            ext = '.amh' if args.lang == 'amharic' else f'.{args.lang}'
+            out_path = source_path.with_suffix(ext)
+            out_path.write_text(ethiopic_source, encoding='utf-8')
+            print(f"✅ ተፈጠረ: {out_path}")
+        else:
+            print(ethiopic_source)
+        return
+
+    if args.round_trip:
+        try:
+            is_identical, orig_ast, recompiled_ast = verify_round_trip(source, lang=args.lang)
+            if is_identical:
+                print("✅ Round-trip AST Idempotency Verified! (AST(Forward(Reverse(code))) == AST(code))")
+                return
+            else:
+                print("❌ AST Mismatch detected during round-trip:", file=sys.stderr)
+                print(f"--- Original AST ---\n{orig_ast}\n--- Recompiled AST ---\n{recompiled_ast}", file=sys.stderr)
+                sys.exit(1)
+        except Exception as e:
+            print(f"❌ Round-trip validation error: {e}", file=sys.stderr)
+            sys.exit(1)
 
     if args.compare:
         langs = args.compare

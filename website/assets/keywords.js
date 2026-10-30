@@ -739,12 +739,33 @@ function transpileToPreview(source, dialectKey = 'amharic') {
     return transpileWithWasm(source, dialectKey);
 }
 
+// Reverse Transpiler: Python -> Ethiopic script for selected dialect
+function transpilePythonToEthiopic(pySource, dialectKey = 'amharic') {
+    const dialect = GEZELANG_DIALECTS[dialectKey] || GEZELANG_DIALECTS['amharic'];
+    const kws = dialect.keywords;
+    const inverted = {};
+    for (const [ethKw, pyKw] of Object.entries(kws)) {
+        inverted[pyKw] = ethKw;
+    }
+
+    // Token pattern: string literals, comments, and Python identifier/keyword words
+    const tokenPattern = /("""[\s\S]*?"""|'''[\s\S]*?'''|f?"(?:\\.|[^"\\])*"|f?'(?:\\.|[^'\\])*'|#[^\n]*|\b[a-zA-Z_]\w*\b)/g;
+
+    return pySource.replace(tokenPattern, (match) => {
+        if (match.startsWith('#') || match.startsWith('"') || match.startsWith("'") || match.startsWith('f"') || match.startsWith("f'")) {
+            return match;
+        }
+        return inverted[match] || match;
+    });
+}
+
 // Attach to globalThis / window
 if (typeof globalThis !== 'undefined') {
     globalThis.GEZELANG_DIALECTS = GEZELANG_DIALECTS;
     globalThis.GEZELANG_EXAMPLES = GEZELANG_EXAMPLES;
     globalThis.transpileToPreview = transpileToPreview;
     globalThis.transpileWithWasm = transpileWithWasm;
+    globalThis.transpilePythonToEthiopic = transpilePythonToEthiopic;
     globalThis.initGezeLangWasm = initGezeLangWasm;
 }
 

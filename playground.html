@@ -291,7 +291,7 @@
         <div class="panels">
             <div class="panel">
                 <div class="panel-header">
-                    <span>የእርስዎ ኮድ (Your Code)</span>
+                    <span id="inputLabel">የእርስዎ ኮድ (Your Code)</span>
                     <span id="dialectIndicator" style="font-size:0.8rem;color:var(--color-gold);">amharic</span>
                 </div>
                 <textarea id="sourceCode" spellcheck="false" placeholder="ኮድዎን እዚህ ይጻፉ... (Type your Ethiopic script code here)"></textarea>
@@ -312,6 +312,7 @@
 
         <div class="toolbar">
             <button class="btn" onclick="runCode()">▶ አሂድ (Run in WASM)</button>
+            <button class="btn" style="background:#1D4ED8;color:white;" id="swapModeBtn" onclick="toggleSwapDirection()">⇄ አቅጣጫ ቀይር (Swap Direction)</button>
             <button class="btn btn-clear" onclick="clearCode()">🔄 አጽዳ (Clear)</button>
         </div>
 
@@ -334,10 +335,34 @@
 <script>
     let pyodideRunner = null;
     let pyodideIsReady = false;
+    let isReverseMode = false;
     let activeTab = 'py';
     let pyCache = '';
     let astCache = '';
     let tokCache = '';
+
+    function toggleSwapDirection() {
+        isReverseMode = !isReverseMode;
+        const srcEl = document.getElementById('sourceCode');
+        const outEl = document.getElementById('pythonOutput');
+        const swapBtn = document.getElementById('swapModeBtn');
+        const inputLabel = document.getElementById('inputLabel');
+        const tabPy = document.getElementById('pTabPy');
+
+        srcEl.value = outEl.textContent || '';
+        if (isReverseMode) {
+            inputLabel.textContent = 'የእርስዎ Python ኮድ (Input Python)';
+            tabPy.textContent = '🇪🇹 GezeLang';
+            swapBtn.style.background = '#047857';
+            swapBtn.textContent = '⇄ አቅጣጫ ቀይር (Python → Ethiopic)';
+        } else {
+            inputLabel.textContent = 'የእርስዎ ኮድ (Your Code)';
+            tabPy.textContent = '🐍 Python';
+            swapBtn.style.background = '#1D4ED8';
+            swapBtn.textContent = '⇄ አቅጣጫ ቀይር (Ethiopic → Python)';
+        }
+        liveTranspile();
+    }
 
     function setPanelTab(t) {
         activeTab = t;
@@ -449,9 +474,15 @@
     function liveTranspile() {
         const src = document.getElementById('sourceCode').value;
         const dialect = document.getElementById('dialectSelect').value || 'amharic';
-        pyCache = (typeof transpileToPreview === 'function') ? transpileToPreview(src, dialect) : src;
-        astCache = buildAST(pyCache);
-        tokCache = buildTokens(src, dialect);
+        if (isReverseMode) {
+            pyCache = (typeof transpilePythonToEthiopic === 'function') ? transpilePythonToEthiopic(src, dialect) : src;
+            astCache = buildAST(src);
+            tokCache = buildTokens(pyCache, dialect);
+        } else {
+            pyCache = (typeof transpileToPreview === 'function') ? transpileToPreview(src, dialect) : src;
+            astCache = buildAST(pyCache);
+            tokCache = buildTokens(src, dialect);
+        }
         setPanelTab(activeTab);
     }
 
@@ -459,7 +490,7 @@
 
     async function runCode() {
         liveTranspile();
-        const py = pyCache.trim();
+        const py = isReverseMode ? document.getElementById('sourceCode').value.trim() : pyCache.trim();
         const cons = document.getElementById('consoleOutput');
         cons.innerHTML = '';
         
